@@ -1,0 +1,361 @@
+/* G:\LocalTalentz\admin_dashboard\static\admin_dashboard\css\dashboard_style.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5; /* Light grey background */
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    margin: 0; /* Ensure no default body margin */
+    padding-top: 60px; /* Space for the fixed top navbar */
+}
+
+/* FIXED TOP NAVBAR */
+.top-fixed-navbar {
+    background-color: orangered; /* Orangered background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: fixed; /* Fixed at the top */
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1030; /* Ensure it's above everything else */
+    padding: 0.75rem 1.5rem; /* Consistent padding */
+    display: flex; /* Use flexbox for alignment */
+    align-items: center;
+    justify-content: space-between; /* Space out items */
+}
+
+.navbar-brand-main {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white; /* White text for "Admin Panel" */
+    text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 30%; /* Further reduced max-width for tighter control on larger screens */
+    margin-right: 1rem; /* Space from next item */
+}
+.navbar-brand-main:hover {
+    color: #f0f0f0; /* Slightly lighter on hover */
+}
+
+.post-job-link,
+.welcome-text { /* Combined styling for these text elements */
+    color: white; /* White text for all top navbar links */
+    font-weight: 500;
+    font-size: 1.05rem;
+    padding: 0.5rem 0.75rem; /* Consistent padding */
+    text-decoration: none;
+    white-space: nowrap; /* Prevent wrapping */
+    transition: background-color 0.2s ease, color 0.2s ease; /* Added transition */
+}
+
+.post-job-link:hover {
+    color: #f0f0f0; /* Slightly lighter on hover */
+    background-color: rgba(255,255,255,0.1); /* Subtle hover background */
+    border-radius: 0.25rem;
+}
+
+.welcome-text {
+    /* No hover effect needed for plain text */
+    padding-right: 0; /* Remove right padding for welcome text as logout is gone from top nav */
+}
+
+
+/* Main Wrapper for Sidebar and Page Content */
+#wrapper {
+    display: flex;
+    transition: all 0.3s ease;
+}
+
+/* Sidebar Styling */
+#sidebar-wrapper {
+    min-height: calc(100vh - 60px); /* Adjust height for fixed navbar */
+    margin-left: 0; /* Sidebar always visible by default on desktop */
+    transition: margin .25s ease-out;
+    background-color: orangered;
+    color: white;
+    width: 18rem;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 60px; /* Stick below the fixed top navbar */
+    left: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0; /* Remove padding from here as heading is gone */
+}
+
+#sidebar-wrapper .sidebar-heading { /* This class is now removed from HTML */
+    display: none; /* Ensure it's hidden if it somehow persists */
+}
+
+#sidebar-wrapper .list-group {
+    width: 100%;
+    padding: 1.5rem 0;
+    flex-grow: 1;
+}
+
+#sidebar-wrapper .list-group-item {
+    color: white;
+    background-color: transparent;
+    border: none;
+    padding: 1.1rem 1.5rem;
+    font-size: 1.15rem;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-left-color 0.2s ease-in-out;
+    border-left: 5px solid transparent;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+#sidebar-wrapper .list-group-item i {
+    font-size: 1.3rem;
+    margin-right: 0.85rem;
+}
+
+#sidebar-wrapper .list-group-item:hover {
+    background-color: rgba(255,255,255,0.2);
+    color: white;
+    border-left-color: white;
+}
+
+#sidebar-wrapper .list-group-item.active {
+    background-color: rgba(255,255,255,0.3);
+    color: white;
+    font-weight: 600;
+    border-left-color: white;
+}
+
+/* Page Content Wrapper */
+#page-content-wrapper {
+    min-width: 100vw;
+    flex-grow: 1;
+    padding-top: 0;
+}
+
+/* Toggled state for sidebar (applies only on mobile due to media query) */
+#wrapper.toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+#wrapper.toggled #page-content-wrapper {
+    min-width: calc(100vw - 18rem);
+}
+
+/* Mobile-only Hamburger Toggle Button */
+.toggle-btn-mobile {
+    position: fixed;
+    top: 75px; /* Adjusted position to be below the fixed top navbar */
+    left: 15px;
+    z-index: 1001;
+    background-color: orangered;
+    color: white;
+    border: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    display: none; /* Hidden by default on desktop */
+    transition: background-color 0.2s ease;
+}
+.toggle-btn-mobile:hover {
+    background-color: #e64a19;
+    color: white;
+}
+
+
+/* Dashboard Page Heading */
+.container-fluid h1 {
+    color: #333;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 2rem !important;
+    padding-top: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+/* Dashboard Cards - Refined Alignment and Spacing */
+.row.dashboard-cards-row {
+    padding: 0 1.5rem; /* Ensure consistent padding on desktop */
+    margin-left: -0.75rem; /* Counteract default Bootstrap column padding */
+    margin-right: -0.75rem; /* Counteract default Bootstrap column padding */
+}
+
+.row.dashboard-cards-row > [class*="col-"] {
+    padding-left: 0.75rem; /* Standardize column padding */
+    padding-right: 0.75rem; /* Standardize column padding */
+}
+
+.dashboard-card {
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 1.5rem; /* Default margin-bottom for cards */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    border-left: 5px solid orangered;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.dashboard-card i {
+    font-size: 3rem;
+    color: orangered;
+    margin-bottom: 0.75rem;
+}
+.dashboard-card h3 {
+    font-size: 2.8rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+.dashboard-card p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 0;
+    font-weight: 500;
+}
+
+/* Specific card colors for differentiation (optional, but looks good) */
+.dashboard-card.companies { border-left-color: #17a2b8; }
+.dashboard-card.users { border-left-color: #28a745; }
+.dashboard-card.jobs { border-left-color: #ffc107; }
+.dashboard-card.applications { border-left-color: #dc3545; }
+
+/* Media Queries for Responsiveness */
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0; /* Sidebar visible by default on larger screens */
+    }
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: -18rem; /* Hide sidebar when toggled on larger screens */
+    }
+    #wrapper.toggled #page-content-wrapper {
+        min-width: 100vw; /* Content takes full width when sidebar is hidden */
+    }
+    .toggle-btn-mobile {
+        display: none; /* Hide mobile toggle button on desktop */
+    }
+}
+
+/* Small device adjustments */
+@media (max-width: 767.98px) {
+    #sidebar-wrapper {
+        margin-left: -18rem; /* Sidebar hidden by default on small screens */
+        position: fixed;
+        z-index: 1000;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+    #page-content-wrapper {
+        width: 100%;
+        margin-left: 0; /* Content starts at 0, will be pushed by toggled sidebar */
+    }
+    #wrapper.toggled #sidebar-wrapper {
+        margin-left: 0; /* Show sidebar when toggled */
+    }
+    #wrapper.toggled #page-content-wrapper {
+        margin-left: 18rem; /* Push content when sidebar is open */
+    }
+    .top-fixed-navbar { /* Adjust fixed top navbar on small screens */
+        padding: 0.5rem 0.75rem; /* Reduced padding for more compact look */
+    }
+    .navbar-brand-main {
+        font-size: 1.3rem; /* Further reduced font size for title on small screens */
+        max-width: 40%; /* Adjust max-width to give more space for other elements */
+    }
+    .post-job-link,
+    .welcome-text {
+        font-size: 0.7rem; /* Even smaller font for links on very small screens */
+        padding: 0.1rem 0.3rem; /* Reduced padding */
+    }
+    .toggle-btn-mobile {
+        display: block; /* Show mobile toggle button on small screens */
+        top: 65px; /* Adjusted for smaller top navbar height */
+        left: 10px; /* Slightly reduce left margin */
+    }
+    .container-fluid h1 {
+        padding-left: 0.5rem;
+        font-size: 2rem; /* Reduce dashboard heading size on small screens */
+    }
+    .row.dashboard-cards-row {
+        padding: 0 0.5rem; /* Adjust row padding on small screens */
+        margin-left: -0.25rem; /* Further adjust negative margin for tighter columns */
+        margin-right: -0.25rem; /* Further adjust negative margin for tighter columns */
+    }
+    .row.dashboard-cards-row > [class*="col-"] {
+        padding-left: 0.25rem; /* Further reduce column padding */
+        padding-right: 0.25rem; /* Further reduce column padding */
+        margin-bottom: 1.5rem; /* Ensure consistent vertical spacing when stacked */
+    }
+    body {
+        padding-top: 55px; /* Adjusted body padding for smaller top navbar */
+    }
+    .dashboard-card h3 {
+        font-size: 2.2rem; /* Reduce card number size on small screens */
+    }
+    .dashboard-card p {
+        font-size: 0.9rem; /* Reduce card text size on small screens */
+    }
+    .dashboard-card i {
+        font-size: 2.5rem; /* Reduce card icon size on small screens */
+    }
+}
+
+/* Extra small device adjustments (e.g., iPhone SE, older phones) */
+@media (max-width: 375px) {
+    .top-fixed-navbar {
+        padding: 0.4rem 0.5rem; /* Even more reduced padding */
+    }
+    .navbar-brand-main {
+        font-size: 1.2rem; /* Even smaller font for title */
+        max-width: 35%; /* Further restrict width */
+    }
+    /* Hide Post Job and Welcome text on very small screens to prevent overflow */
+    .post-job-link,
+    .welcome-text {
+        display: none; /* Hide these elements completely */
+    }
+    body {
+        padding-top: 50px; /* Adjust body padding for very small navbar */
+    }
+    .toggle-btn-mobile {
+        top: 60px; /* Adjust for very small navbar height */
+        left: 5px;
+        padding: 0.6rem 0.8rem;
+    }
+    .container-fluid h1 {
+        font-size: 1.8rem; /* Smaller dashboard heading */
+        padding-left: 0.25rem; /* Reduce padding for heading */
+    }
+    .row.dashboard-cards-row {
+        padding: 0 0.25rem; /* Reduce row padding for very small screens */
+        margin-left: -0.125rem; /* Adjust negative margin */
+        margin-right: -0.125rem; /* Adjust negative margin */
+    }
+    .row.dashboard-cards-row > [class*="col-"] {
+        padding-left: 0.125rem; /* Further reduce column padding */
+        padding-right: 0.125rem; /* Further reduce column padding */
+        margin-bottom: 1.2rem; /* Slightly reduced vertical spacing for very small screens */
+    }
+    .dashboard-card {
+        padding: 1rem; /* Reduce card internal padding */
+    }
+    .dashboard-card h3 {
+        font-size: 2rem;
+    }
+    .dashboard-card p {
+        font-size: 0.85rem;
+    }
+    .dashboard-card i {
+        font-size: 2rem;
+    }
+}

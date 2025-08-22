@@ -1,0 +1,41 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Feedback Details{% endblock %}
+
+{% block main_content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="orangered-text fw-bold mb-0">Feedback Details</h1>
+        <a href="{% url 'feedback_list' %}" class="btn btn-orangered shadow-sm">Back to List</a>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title">{{ feedback.subject }}</h2>
+            <h6 class="card-subtitle mb-2 text-muted">
+                Submitted by <strong>{{ feedback.user.username|default:"Anonymous" }}</strong> on {{ feedback.created_at|date:"F d, Y" }}
+            </h6>
+            <hr>
+            
+            <div class="bg-light p-3 rounded mb-4">
+                <p class="lead">{{ feedback.message|linebreaksbr }}</p>
+            </div>
+            
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <strong>Status:</strong> 
+                    {% if feedback.is_read %}
+                    <span class="badge bg-success">Read</span>
+                    {% else %}
+                    <span class="badge bg-warning">Unread</span>
+                    {% endif %}
+                </div>
+                <a href="{% url 'feedback_delete' feedback.pk %}" class="btn btn-danger" title="Delete this entry">
+                    <i class="fas fa-trash-alt me-1"></i> Delete
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

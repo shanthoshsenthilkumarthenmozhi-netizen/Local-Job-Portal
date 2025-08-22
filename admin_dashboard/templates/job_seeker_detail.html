@@ -1,0 +1,106 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Job Seeker Details{% endblock %}
+
+{% block main_content %}
+<style>
+    .orangered-bg {
+        background: linear-gradient(90deg, #ff4f00 0%, #ff7f50 100%);
+        color: #fff;
+    }
+    .contrast-bg {
+        background: #f7f7fa;
+    }
+    .contrast-text {
+        color: #343a40;
+    }
+    .info-card {
+        border-radius: 1rem;
+        border: none;
+        box-shadow: 0 4px 24px rgba(255,79,0,0.08);
+    }
+    .badge-success {
+        background: #28a745;
+    }
+    .badge-danger {
+        background: #dc3545;
+    }
+    .btn-orangered {
+        background: #ff4f00;
+        color: #fff;
+        border: none;
+    }
+    .btn-orangered:hover {
+        background: #ff7f50;
+        color: #fff;
+    }
+    @media (max-width: 768px) {
+        .card-title {
+            font-size: 1.5rem;
+        }
+        .card-subtitle {
+            font-size: 1rem;
+        }
+        .container {
+            padding: 1rem !important;
+        }
+    }
+</style>
+<div class="container py-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+        <h1 class="orangered-text fw-bold mb-0">Job Seeker Details</h1>
+        <a href="{% url 'job_seeker_list' %}" class="btn btn-orangered shadow-sm px-4 py-2">Back to Job Seekers</a>
+    </div>
+
+    <div class="card info-card contrast-bg shadow-sm">
+        <div class="card-body">
+            <div class="d-flex flex-column flex-md-row align-items-md-center gap-3">
+                <div class="orangered-bg rounded-circle d-flex align-items-center justify-content-center" style="width:80px;height:80px;font-size:2rem;">
+                    {{ job_seeker.user.first_name|slice:":1" }}{{ job_seeker.user.last_name|slice:":1" }}
+                </div>
+                <div>
+                    <h2 class="card-title contrast-text mb-1">{{ job_seeker.user.first_name }} {{ job_seeker.user.last_name }}</h2>
+                    <h6 class="card-subtitle mb-2 text-muted">@{{ job_seeker.user.username }}</h6>
+                </div>
+            </div>
+            <hr>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <p class="mb-2"><strong>Email:</strong> <a href="mailto:{{ job_seeker.user.email }}" class="text-decoration-none orangered-text">{{ job_seeker.user.email }}</a></p>
+                    <p class="mb-2"><strong>Phone:</strong> <span class="contrast-text">{{ job_seeker.phone|default:"N/A" }}</span></p>
+                    <p class="mb-2"><strong>Status:</strong>
+                        {% if job_seeker.is_active %}
+                        <span class="badge badge-success">Active</span>
+                        {% else %}
+                        <span class="badge badge-danger">Inactive</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-2"><strong>Registered On:</strong> <span class="contrast-text">{{ job_seeker.created_at|date:"F d, Y" }}</span></p>
+                    <p class="mb-2"><strong>Last Updated:</strong> <span class="contrast-text">{{ job_seeker.updated_at|date:"F d, Y" }}</span></p>
+                    {% if job_seeker.resume %}
+                    <p class="mb-2"><strong>Resume:</strong> <a href="{{ job_seeker.resume.url }}" target="_blank" class="text-decoration-none orangered-text fw-bold">View Resume</a></p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row mt-4 g-4">
+                <div class="col-md-6">
+                    <div class="p-3 rounded contrast-bg border">
+                        <h4 class="orangered-text mb-2">Skills</h4>
+                        <p class="contrast-text mb-0">{{ job_seeker.skills|default:"N/A" }}</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 rounded contrast-bg border">
+                        <h4 class="orangered-text mb-2">Experience</h4>
+                        <p class="contrast-text mb-0">{{ job_seeker.experience|default:"N/A" }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

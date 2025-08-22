@@ -1,0 +1,73 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Confirm Deletion{% endblock %}
+
+{% block main_content %}
+<style>
+    .orangered-bg {
+        background: linear-gradient(90deg, orangered 60%, #fff3e0 100%);
+    }
+    .orangered-text {
+        color: orangered;
+    }
+    .contrast-card {
+        border: 2px solid orangered;
+        box-shadow: 0 4px 24px rgba(255, 69, 0, 0.15);
+        border-radius: 1rem;
+        background: #fff;
+    }
+    .contrast-header {
+        background: orangered;
+        color: #fff;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+    }
+    .contrast-footer {
+        background: #fff3e0;
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+    }
+    .btn-orangered {
+        background: orangered;
+        color: #fff;
+        border: none;
+    }
+    .btn-orangered:hover, .btn-orangered:focus {
+        background: #d84315;
+        color: #fff;
+    }
+    @media (max-width: 576px) {
+        .card {
+            margin: 0 0.5rem;
+        }
+        h3.orangered-text {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+<div class="container py-5 orangered-bg">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+            <div class="card contrast-card">
+                <div class="card-header contrast-header d-flex align-items-center">
+                    <i class="fas fa-exclamation-triangle me-2 fs-4"></i>
+                    <h4 class="mb-0 flex-grow-1">Confirm Deletion</h4>
+                </div>
+                <div class="card-body text-center">
+                    <p class="lead mb-3">Are you sure you want to delete the job seeker:</p>
+                    <h3 class="orangered-text mb-2">{{ job_seeker.user.first_name }} {{ job_seeker.user.last_name }}</h3>
+                    <p class="text-danger fw-bold mb-0">This action cannot be undone.</p>
+                </div>
+                <div class="card-footer contrast-footer d-flex flex-column flex-md-row justify-content-center gap-3 py-3">
+                    <form action="{% url 'job_seeker_delete' job_seeker.pk %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-orangered px-4">Yes, I'm sure</button>
+                    </form>
+                    <a href="{% url 'job_seeker_list' %}" class="btn btn-secondary px-4">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

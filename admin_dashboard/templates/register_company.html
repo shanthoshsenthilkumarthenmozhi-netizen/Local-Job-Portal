@@ -1,0 +1,132 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Register New Company{% endblock %}
+
+    {% block extra_head %}<link rel="stylesheet" href="{% static 'css/admin/register_company.css' %}">{% endblock %}
+    
+
+{% block main_content %}
+    <style>
+        body {
+            background: #fff8f3;
+        }
+        .form-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        .form-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 32px rgba(255, 69, 0, 0.10), 0 1.5px 4px rgba(0,0,0,0.05);
+            padding: 2.5rem 2rem;
+            max-width: 420px;
+            width: 100%;
+            border-top: 6px solid orangered;
+        }
+        .form-card h2 {
+            color: orangered;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .form-label {
+            color: #222;
+            font-weight: 600;
+        }
+        .form-control, textarea.form-control {
+            border: 1.5px solid #ff7043;
+            border-radius: 8px;
+            padding: 0.6rem 0.9rem;
+            background: #fff7f3;
+            color: #222;
+            font-size: 1rem;
+            transition: border-color 0.2s;
+        }
+        .form-control:focus, textarea.form-control:focus {
+            border-color: orangered;
+            outline: none;
+            background: #fff3eb;
+        }
+        .submit-btn {
+            width: 100%;
+            background: orangered;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 0;
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            box-shadow: 0 2px 8px rgba(255, 69, 0, 0.08);
+        }
+        .submit-btn:hover {
+            background: #d84315;
+        }
+        .messages {
+            margin-bottom: 1rem;
+            padding: 0;
+            list-style: none;
+        }
+        .messages li {
+            background: #ffe5db;
+            color: #d84315;
+            border-left: 4px solid orangered;
+            padding: 0.7em 1em;
+            margin-bottom: 0.5em;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+        @media (max-width: 500px) {
+            .form-card {
+                padding: 1.2rem 0.5rem;
+            }
+        }
+    </style>
+    <div class="form-container">
+        <div class="form-card">
+            <h2>Register New Company</h2>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="company_name" class="form-label">Company Name:</label>
+                    <input type="text" class="form-control" id="company_name" name="company_name" value="{{ company_name|default:'' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="username" class="form-label">Create Username (Company ID):</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ username|default:'' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required>
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email:</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{ email|default:'' }}" required>
+                </div>
+                <div class="mb-3">
+                    <label for="website" class="form-label">Website Link (Optional):</label>
+                    <input type="url" class="form-control" id="website" name="website" value="{{ website|default:'' }}">
+                </div>
+                <div class="mb-3">
+                    <label for="location_address" class="form-label">Location / Address:</label>
+                    <textarea class="form-control" id="location_address" name="location_address" rows="3" required>{{ location_address|default:'' }}</textarea>
+                </div>
+                <button type="submit" class="submit-btn">Register Company</button>
+            </form>
+        </div>
+    </div>
+{% endblock main_content %}
+    

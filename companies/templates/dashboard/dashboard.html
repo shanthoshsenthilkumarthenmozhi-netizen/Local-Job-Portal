@@ -1,0 +1,44 @@
+{% extends 'dashboard/company_view.html' %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block main_content %}
+    <div class="p-8">
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Company Dashboard</h1>
+            <!-- <a href="{% url 'companies:post_job' %}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-plus-circle fa-sm text-white-50"></i> Post a Job</a> -->
+        </div>
+        <p class="text-lg text-gray-600 mb-6">Welcome to your dashboard. Here's a quick overview of your recruitment activities.</p>
+        <div class="row g-4 mt-2">
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="stat-card-reports">
+                    <div class="stat-card-header">
+                        <i class="fas fa-briefcase stat-card-icon"></i>
+                        <span class="stat-card-title">Total Jobs Posted</span>
+                    </div>
+                    <h3 class="stat-card-count">{{ total_jobs }}</h3>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="stat-card-reports">
+                    <div class="stat-card-header">
+                        <i class="fas fa-list-alt stat-card-icon"></i>
+                        <span class="stat-card-title">Active Jobs</span>
+                    </div>
+                    <h3 class="stat-card-count">{{ active_jobs }}</h3>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-4">
+                <div class="stat-card-reports">
+                    <div class="stat-card-header">
+                        <i class="fas fa-user-friends stat-card-icon"></i>
+                        <span class="stat-card-title">Pending Applications</span>
+                    </div>
+                    <h3 class="stat-card-count">{{ pending_applications }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

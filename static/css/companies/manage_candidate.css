@@ -1,0 +1,80 @@
+:root {
+        --primary: #ff4500; /* orangered */
+        --primary-light: #ff7043;
+        --primary-dark: #c23500;
+        --bg-light: #fff7f3;
+        --table-header: #fff3e6;
+        --table-row-hover: #ffe5d0;
+        --badge-bg: #ff4500;
+        --badge-color: #fff;
+    }
+    body {
+        background: var(--bg-light);
+    }
+    .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(255, 69, 0, 0.08);
+        border: none;
+    }
+    h1 {
+        color: var(--primary-dark);
+        letter-spacing: 1px;
+    }
+    .table thead {
+        background: var(--table-header);
+    }
+    .table th {
+        color: var(--primary-dark);
+        font-weight: 600;
+        border-bottom: 2px solid var(--primary-light);
+    }
+    .table-hover tbody tr:hover {
+        background: var(--table-row-hover);
+        transition: background 0.2s;
+    }
+    .badge.bg-primary {
+        background: var(--badge-bg) !important;
+        color: var(--badge-color) !important;
+        font-weight: 500;
+        border-radius: 8px;
+        padding: 0.5em 1em;
+        font-size: 0.95em;
+    }
+    .btn-outline-info {
+        border-color: var(--primary);
+        color: var(--primary);
+        background: transparent;
+        transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline-info:hover, .btn-outline-info:focus {
+        background: var(--primary);
+        color: #fff;
+    }
+    .btn-outline-success {
+        border-color: #43a047;
+        color: #43a047;
+        background: transparent;
+    }
+    .btn-outline-success:hover, .btn-outline-success:focus {
+        background: #43a047;
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #e53935;
+        color: #e53935;
+        background: transparent;
+    }
+    .btn-outline-danger:hover, .btn-outline-danger:focus {
+        background: #e53935;
+        color: #fff;
+    }
+    @media (max-width: 768px) {
+        .p-8 { padding: 1rem !important; }
+        .card { padding: 1rem !important; }
+        .table-responsive { overflow-x: auto; }
+        h1 { font-size: 2rem; }
+        .text-lg { font-size: 1rem; }
+        .table th, .table td { font-size: 0.95em; }
+        .d-flex.gap-2 { flex-direction: column; gap: 0.5rem !important; }
+    }

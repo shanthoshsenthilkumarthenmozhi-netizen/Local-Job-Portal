@@ -1,0 +1,485 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Talentz - Find Your Local Opportunity</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" xintegrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" xintegrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" href="{% url 'admin_login' %}">Local Talentz</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/candidate-login">Candidate Login</a>
+                    </li>
+
+                    <!-- Add a "Post a Job" link for companies/admins -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'companies:company_signup' %}">Post a Job</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Background Image and Search -->
+     <div class="container-fluid header-bg d-flex flex-column align-items-center justify-content-center text-center">
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content position-relative text-white">
+            <h1 class="display-3 fw-bold mb-4">Find Your Local Opportunity</h1>
+
+            <form class="row justify-content-center align-items-center g-3">
+                <div class="col-12 col-md-5">
+                    <input type="text" class="form-control form-control-lg" placeholder="job title,keywords or company name">
+                </div>
+                <div class="col-12 col-md-5">
+                    <input type="text" class="form-control form-control-lg" placeholder="City or region">
+                </div>
+                <div class="col-12 col-md-2">
+                    <button type="submit" class="btn btn-success btn-lg w-100">Search</button>
+                </div>
+            </form>
+
+            <p class="mt-4"> or browse by category:
+                <a href="#" class="text-white text-decoration-underline">Category #1</a>
+                <a href="#" class="text-white text-decoration-underline ms-3">Category #2</a>
+            </p>
+        </div>
+    </div>
+        
+
+        
+
+        <!-- Category Section -->
+         <main class="container my-5">
+            <section class="py-5">
+                <h2 class="text-center fw-bold mb-4">Popular Categories</h2>
+                <div class="text-center mb-4">
+                    <div class="separator mx-auto"></div>
+                </div> 
+                <div class="row row-cols-2 row-cols-md-3 row-cols-lg-3 g-4">
+                    {% for category in categories %}
+                    <div class="col">
+                        <div class="category-card  p-3 text-center rounded shadow">
+                            <div class="category-card-content">
+                                
+                                <i class="{{ category.icon_class }} fa-3x mb-3 text-orangered"></i>
+                                <h6 class="fw-bold mb-2">{{ category.name }}</h6>
+                               
+                                <div class="category-count bg-white text-orangered rounded-pill py-1 text-secondary">{{ category.job_count }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="col-12 text-center">
+                        <p class="lead text-muted">No categories available yet. Please add some in the admin panel and post jobs to them.</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </section>
+        </main>
+
+            <!-- Job List Section -->
+            <section class="py-5 mt-5 bg-section-light-grey">
+
+            <div class="row d-flex align-items-stretch job-section-content-wrapper">
+                <div class="col-12 col-lg-7">
+                    <h2 class="fw-bold mb-4">Recent Jobs</h2>
+                        <div class="separator mb-4" style="margin-left: 0;"></div>
+
+                    <div class="job-list">
+                        <div class="job-list-item d-flex align-items-center p-3 mb-3 rounded shadow-sm border">
+                            <div class="job-logo me-3">
+                                <i class="fas fa-briefcase fa-2x text-muted"></i>
+                            </div>
+                            <div class="job-details flex-grow-1">
+                                <h6 class="job-title fw-bold text-orangered mb-1">Restaurant Crew</h6>
+                                <p class="job-meta text-muted small mb-0">
+                                    <i class="fas fa-building me-1"></i>Resto Bar &nbsp;
+                                    <i class="fas fa-map-marker-alt me-1"></i>Tiruppur &nbsp;
+                                    <span class="job-salary me-2"><i class="fa-solid fa-indian-rupee-sign me-1"></i>20000 - 35000</span>
+                                </p>
+                            </div>
+                            <span class="job-type-badge badge bg-success-light text-success fw-bold p-2">Full Time</span>
+                        </div>
+
+                        <div class="job-list-item d-flex align-items-center p-3 mb-3 rounded shadow-sm border">
+                            <div class="job-logo me-3">
+                                <i class="fas fa-code fa-2x text-muted"></i>
+                            </div>
+                            <div class="job-details flex-grow-1">
+                                <h6 class="job-title fw-bold text-orangered mb-1">JavaScript Fullstack Developer</h6>
+                                <p class="job-meta text-muted small mb-0">
+                                    <i class="fas fa-building me-1"></i>Cooper &nbsp;
+                                    <i class="fas fa-map-marker-alt me-1"></i>Anywhere &nbsp;
+                                    <span class="job-salary me-2"><i class="fa-solid fa-indian-rupee-sign me-1"></i>55000 - 70000</span>
+                                </p>
+                            </div>
+                            <span class="job-type-badge badge bg-warning-light text-warning fw-bold p-2">Freelance</span>
+                        </div>
+
+                        <div class="job-list-item d-flex align-items-center p-3 mb-3 rounded shadow-sm border">
+                            <div class="job-logo me-3">
+                                <i class="fab fa-react fa-2x text-muted"></i>
+                            </div>
+                            <div class="job-details flex-grow-1">
+                                <h6 class="job-title fw-bold text-orangered mb-1">ReactJS Fullstack Developer</h6>
+                                <p class="job-meta text-muted small mb-0">
+                                    <i class="fas fa-building me-1"></i>Cooper &nbsp;
+                                    <i class="fas fa-map-marker-alt me-1"></i>Anywhere &nbsp;
+                                    <span class="job-salary me-2"><i class="fa-solid fa-indian-rupee-sign me-1"></i>55000 - 70000</span>
+                                </p>
+                            </div>
+                            <span class="job-type-badge badge bg-warning-light text-warning fw-bold p-2">Freelance</span>
+                        </div>
+
+                        <div class="job-list-item d-flex align-items-center p-3 mb-3 rounded shadow-sm border">
+                            <div class="job-logo me-3">
+                                <i class="fas fa-chart-line fa-2x text-muted"></i>
+                            </div>
+                            <div class="job-details flex-grow-1">
+                                <h6 class="job-title fw-bold text-orangered mb-1">Assistant Broker, Real Estate</h6>
+                                <p class="job-meta text-muted small mb-0">
+                                    <i class="fas fa-building me-1"></i>RealState &nbsp;
+                                    <i class="fas fa-map-marker-alt me-1"></i>New York &nbsp;
+                                    <span class="job-salary me-2"><i class="fa-solid fa-indian-rupee-sign me-1"></i>55000 - 70000</span>
+                                </p>
+                            </div>
+                            <span class="job-type-badge badge bg-success-light text-success fw-bold p-2">Full Time</span>
+                        </div>
+
+                        <div class="job-list-item d-flex align-items-center p-3 mb-3 rounded shadow-sm border">
+                            <div class="job-logo me-3">
+                                <i class="fas fa-signal fa-2x text-muted"></i>
+                            </div>
+                            <div class="job-details flex-grow-1">
+                                <h6 class="job-title fw-bold text-orangered mb-1">Telecommunication Manager</h6>
+                                <p class="job-meta text-muted small mb-0">
+                                    <i class="fas fa-building me-1"></i>Think &nbsp;
+                                    <i class="fas fa-map-marker-alt me-1"></i>London &nbsp;
+                                </p>
+                            </div>
+                            <span class="job-type-badge badge bg-danger-light text-danger fw-bold p-2">Part Time</span>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-5">
+                        <a href="#" class="btn btn-show-more btn-lg px-5"><i class="fas fa-plus me-2"></i> Show More Jobs</a>
+                    </div>
+                </div>
+
+                <!-- // Featured Job section // -->
+                <div class="col-12 col-lg-5 mt-lg-0">
+                    <div class="featured-header-wrapper">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">Featured Jobs</h2>
+                    <div class="featured-nav text-secondary small">
+                        <a href="#" class="text-secondary text-decoration-none me-2">Prev</a> /
+                        <a href="#" class="text-secondary text-decoration-none ms-2">Next</a>
+                        </div>
+                        </div>
+                    <div class="separator mb-4" style="margin-left: 0;"></div></div>
+
+                    <div class="featured-job-card p-4 rounded shadow-sm border">
+                        <h5 class="job-title fw-bold text-orangered mb-2">Restaurant Crew</h5>
+                        <p class="company-name text-muted mb-1"><i class="fas fa-building me-2"></i>Resto Bar</p>
+                        <p class="job-location text-muted mb-1"><i class="fas fa-map-marker-alt me-2"></i>Florida</p>
+                        <p class="job-salary text-muted mb-3"><i class="fa-solid fa-indian-rupee-sign me-2"></i>20000 - 35000</p>
+                        <p class="job-description text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Animineque fugiat tempora, numquam voluptate veritatis odit id, iste eum culpa alias, ut officiis omnis itaque ad, rem sunt doloremque molestias.</p>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+
+                                                        <!-- <-- About Page -->
+         <section class="about-hero-section mt-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h2 class="display-3 fw-bold mb-3">Connecting Communities, Empowering Futures.</h2>
+                        <p class="lead mb-4">At Local Talentz, we believe that thriving communities are built on local opportunities. We're dedicated to bridging the gap between local talent and businesses, fostering growth right where you live.</p>
+                    </div>
+                </div>
+            </div>
+         </section>
+
+         <section id="our-story" class="about-section-padding">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-6 mb-4 mb-lg-0">
+                        <img src="{% static 'Images/our-story.jpg' %}" alt="Our Story:Community Connection" class="img-fluid rounded shadow-lg">
+                    </div>
+                    <div class="col-lg-6">
+                        <h2 class="display-5 fw-bold mb-4">Our Story: Born from a Local Need</h2>
+                        <p class="lead text-muted mb-4">
+                            Local Talentz began with a simple observation: talented individuals in our own communities often struggled to find local job opportunities, while local businesses faced challenges in sourcing skilled, dedicated employees. We realized there was a disconnect, a gap that technology could help bridge.
+                        </p>
+                        <p class="text-muted">
+                            Founded by a team passionate about community development and economic growth, Local Talentz was created to be the definitive platform for connecting local job seekers with local employers. Our aim is to foster a stronger, more vibrant local economy, one successful match at a time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+         </section>
+
+         <section class="about-section-padding bg-light-grey">
+            <div class="container text-center">
+                <h2 class="display-5 fw-bold mb-4">Our Mission & Vision</h2>
+                <p class="lead text-muted mb-5">
+                    Guiding principles that define our commitment to local prosperity.
+                </p>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 border rounded shadow-sm h-100">
+                            <i class="fas fa-bullseye icon-box mb-3 text-orangered"></i>
+                            <h3 class="h4 fw-bold mb-3">Our Mission</h3>
+                            <p class="text-muted">
+                                To empower individuals to find meaningful local employment and to enable businesses to build robust local teams, thereby strengthening community economies.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="p-4 border rounded shadow-sm h-100">
+                            <i class="fas fa-lightbulb icon-box mb-3 text-teal"></i>
+                            <h3 class="h4 fw-bold mb-3">Our Vision</h3>
+                            <p class="text-muted">
+                                To be the premier platform for local job connections, recognized for fostering economic growth and opportunity in every community we serve.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+         
+        <section class="about-section-padding">
+            <div class="container text-center">
+                <h2 class="display-5 fw-bold mb-4">How Local Talentz Empowers You</h2>
+                <p class="lead text-muted mb-5">
+                     A platform designed with your success in mind, whether you're seeking or offering talent.
+                </p>
+                <div class="row g-4">
+                    <div class="col-lg-6">
+                        <div class="value-card">
+                            <i class="fas fa-user-tie icon-box"></i>
+                            <h4 class="fw-bold mb-3 text-orangered">For Job Seekers</h4>
+                            <ul class="text-start text-menu">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i><strong>Discover Local Jobs:</strong> Find opportunities close to home, reducing commute times and fostering community ties.</li> </li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> <strong>Tailored Matches:</strong> Our intelligent system connects you with jobs that truly fit your skills and aspirations.</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> <strong>Effortless Application:</strong> Streamlined tools make applying for your next role quick and easy.</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i> <strong>Career Growth:</strong> Access resources and local networks to grow your professional journey.</li>
+                            </ul>
+                            <a href="#" class="btn btn-sm btn-outline-primary mt-3">Browse Jobs <i class="fas fa-arrow-right ms-2"></i></a>  
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="value-card">
+                            <i class="fas fa-building icon-box"></i>
+                            <h4 class="fw-bold mb-3 text-teal">For Companies</h4>
+                            <ul class="text-start text-muted">
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> <strong>Source Local Talent:</strong> Easily connect with qualified candidates right in your community.</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> <strong>Efficient Hiring:</strong> Our platform simplifies the posting and management of job listings.</li>
+                                <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> <strong>Cost-Effective Solutions:</strong> Reduce recruitment costs by targeting a local, dedicated workforce.</li>
+                                <li><i class="fas fa-check-circle text-success me-2"></i> <strong>Community Impact:</strong> Contribute to local economic strength by hiring local.</li>
+                            </ul>
+                            <a href="#" class="btn btn-sm btn-outline-success mt-3">Post a Job <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <section class="about-section-padding bg-white">
+            <div class="container text-center">
+                <h2 class="display-5 fw-bold mb-4">Our Core Values</h2>
+                <p class="lead text-muted mb-5">
+                    The principles that guide every decision and interaction at Local Talentz.
+                </p>
+                <div class="row g-4 justify-content-center"> {# Added justify-content-center for better alignment if not a full row #}
+                    <div class="col-md-4 col-sm-6">
+                        <div class="p-4 border rounded h-100 text-center">
+                            <i class="fas fa-handshake icon-box text-primary"></i>
+                            <h5 class="fw-bold mb-2">Community First</h5>
+                            <p class="small text-muted">Dedicated to nurturing local economies and fostering strong community ties through employment.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="p-4 border rounded h-100 text-center">
+                            <i class="fas fa-star icon-box text-warning"></i>
+                            <h5 class="fw-bold mb-2">Opportunity for All</h5>
+                            <p class="small text-muted">Committed to providing equitable access to jobs for every individual and talent for every business.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="p-4 border rounded h-100 text-center">
+                            <i class="fas fa-cogs icon-box text-info"></i>
+                            <h5 class="fw-bold mb-2">Simplicity & Efficiency</h5>
+                            <p class="small text-muted">Striving to make the job search and hiring process as straightforward and effective as possible.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="p-4 border rounded h-100 text-center">
+                            <i class="fas fa-heart icon-box text-danger"></i>
+                            <h5 class="fw-bold mb-2">Dedicated Support</h5>
+                            <p class="small text-muted">Offering unwavering support to both job seekers and employers throughout their journey.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6">
+                        <div class="p-4 border rounded h-100 text-center">
+                            <i class="fas fa-chart-line icon-box text-success"></i>
+                            <h5 class="fw-bold mb-2">Growth & Innovation</h5>
+                            <p class="small text-muted">Continuously evolving our platform to better serve the dynamic needs of the local job market.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-5 text-center bg-orangered text-white">
+            <div class="container">
+                <h2 class="fw-bold mb-3">Ready to Make Your Next Local Move?</h2>
+                <p class="lead mb-4">Join Local Talentz today and unlock a world of opportunities.</p>
+                <a href="#" class="btn btn-lg btn-light me-3">Find Your Job</a>
+                <a href="#" class="btn btn-lg btn-outline-light">Hire Local Talent</a>
+            </div>
+        </section>
+
+        <!-- Testimonial Page -->
+         <section class="testimonials-section about-section-padding bg-light-grey">
+            <div class="container text-center">
+                <h2 class="display-5 fw-bold mb-4">What Our Community Says</h2>
+                <p class="lead text-muted mb-5">Hear directly from job seekers and businesses who found their match with Local Talentz.</p>
+                <div class="row g-4 justify-content-center">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="testimonial-card p-4 rounded shadow-sm h-100">
+                            <p class="lead mb-3 fst-italic">Local Talentz helped me find a fantastic job right in my hometown. The process was so easy and I'm thrilled to be contributing to my local community!"</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static 'Images/testimonial-1.jpg' %}" alt="Testimonial User 1" class="rounded-circle me-3" style="width:60px;height:60px; object-fit:cover;">
+                                <div>
+                                    <h6 class="fw-bold mb-0">Naveen</h6>
+                                    <p class="small text-muted mb-0">Local Job Seeker</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="testimonial-card p-4 rounded shadow-sm h-100">
+                            <p class="lead mb-3 fst-italic">"Finding skilled staff locally was always a challenge until Local Talentz. We've hired three amazing individuals through them, strengthening our team and local economy."</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static 'Images/testimonial-2.jpg' %}" alt="Testimonial User 2" class="rounded-circle me-3" style="width:60px; height:60px;object-fit:cover;">
+                                <div>
+                                    <h6 class="fw-boldmb-0">Dayanidhi</h6>
+                                    <p class="small text-muted mb-0">Small Business Owner</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="testimonial-card p-4 shadow-sm h-100">
+                            <p class="lead mb-3 fst-italic">"The platform is incredibly intuitive. I found multiple relevant job postings and landed an interview within a week. Highly recommend Local Talentz for anyone looking locally!"</p>
+                            <div class="d-flex align-items-center justify-content-center">
+                                <img src="{% static 'Images/testimonial-3.jpg' %}" alt="Testimonial User 3" class="rounded-circle me-3" style="width:60px; height:60px; object-fit:cover; ">
+                                <div>
+                                    <h6 class="fw-bold mb-0">Monica</h6>
+                                    <p class="small text-muted mb-0">Freelance Developer</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+         </section>
+
+       
+    
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row"> {# This is the main row for your columns #}
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5 class="fw-bold mb-3 text-orangered">Location/Map</h5>
+                <p class="text-white">
+                    Your local path to success starts here.
+                    <br> SPK Nagar-4,
+                    <br>1st Street, Pongupalayam,
+                    <br>Tiruppur, Tamil Nadu, 641666
+                    <br>India
+                </p>
+                <div class="map-placeholder bg-secondary d-flex align-items-center justify-content-center" style="height:120px;width:100%; font-size:0.9rem; color:rgba(255,255,255,0.7);">
+    
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d885.488541991603!2d77.33498040264298!3d11.188614844935845!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2s!5e1!3m2!1sen!2sin!4v1752771670584!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="500" loading="lazy" referrerpolicy="no-referrer-when-downgrade;"></iframe>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5 class="fw-bold mb-3">Quick Menu</h5>
+                <ul class="list-unstyled">
+                    <li><a href='#' class="text-white text-decoration-none py-1 d-block">About Us</a></li> 
+                    <li><a href="#" class="text-white text-decoration-none py-1 d-block">Services</a></li>
+                    <li><a href="#" class="text-white text-decoration-none py-1 d-block">Blog</a></li>
+                    <li><a href="#" class="text-white text-decoration-none py-1 d-block">Contact</a></li>
+                    <li><a href="#" class="text-white text-decoration-none py-1 d-block">Privacy Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5 class="fw-bold mb-3 text-teal">Rate Us</h5>
+                <p class="text-white">Love Local Talentz? Share your experience and help us grow!</p>
+                <div class="star-rating mb-3">
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="fas fa-star text-warning"></i>
+                    <i class="far fa-star text-warning"></i> 
+                </div>
+                <a href="#" class="btn btn-outline-light btn-sm">Leave a Review</a>
+                <p class="small text-muted mt-2">Your feedback empowers us!</p>
+            </div>
+
+            <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                <h5 class="fw-bold mb-3">Follow Us</h5>
+                <div class="d-flex social-icons">
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" class="text-white me-3 fs-4"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div> 
+
+        <hr class="mt-4 mb-3 border-secondary">
+        <div class="text-center">
+            <p class="mb-0 text-white small">© 2025 Local Talentz. All rights reserved.</p>
+        </div>
+    </div> 
+</footer>
+
+
+    
+
+    
+</body>
+</html>

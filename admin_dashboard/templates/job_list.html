@@ -1,0 +1,208 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %} Manage Jobs{% endblock %}
+
+{% block main_content %}
+<style>
+    /* Orangered base color and contrast styling */
+    :root {
+        --primary: orangered;
+        --contrast: #fff;
+        --accent: #222;
+        --secondary: #ffb347;
+        --table-header: #fff3e0;
+        --table-row-hover: #ffe5d0;
+    }
+    .btn-primary, .btn-info, .btn-success, .btn-warning, .btn-danger {
+        border: none;
+        font-weight: 500;
+    }
+    .btn-primary {
+        background: var(--primary);
+        color: var(--contrast);
+    }
+    .btn-info {
+        background: var(--secondary);
+        color: var(--accent);
+    }
+    .btn-success {
+        background: #43a047;
+        color: var(--contrast);
+    }
+    .btn-warning {
+        background: #ffa726;
+        color: var(--accent);
+    }
+    .btn-danger {
+        background: #e53935;
+        color: var(--contrast);
+    }
+    .card {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 2px 8px rgba(255, 69, 0, 0.08);
+    }
+    .card-body {
+        background: #fff;
+        border-radius: 12px;
+    }
+    .table thead th {
+        background: var(--table-header);
+        color: var(--primary);
+        font-weight: 600;
+        border-bottom: 2px solid var(--primary);
+    }
+    .table tbody tr:hover {
+        background: var(--table-row-hover);
+    }
+    .form-label {
+        color: var(--primary);
+        font-weight: 500;
+    }
+    .form-select, .form-control {
+        border: 1px solid var(--primary);
+        border-radius: 8px;
+    }
+    .alert {
+        border-radius: 8px;
+        font-weight: 500;
+    }
+    .messages-container .alert-success {
+        background: #e6ffed;
+        color: #2e7d32;
+    }
+    .messages-container .alert-danger {
+        background: #ffeaea;
+        color: #c62828;
+    }
+    .messages-container .alert-info {
+        background: #e3f2fd;
+        color: #1565c0;
+    }
+    @media (max-width: 768px) {
+        .table-responsive {
+            font-size: 0.95rem;
+        }
+        .card-body {
+            padding: 1rem;
+        }
+        .btn {
+            font-size: 0.95rem;
+            padding: 0.5rem 0.75rem;
+        }
+        .row.g-3 > [class^="col-"] {
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+<div class="container-fluid py-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+        <h2 class="mb-2" style="color:var(--primary);font-weight:700;">Manage Jobs</h2>
+        <a href="{% url 'job_create' %}" class="btn btn-primary d-flex align-items-center">
+            <i class="fas fa-plus-circle me-2"></i> Post New Job
+        </a>
+    </div>
+
+    {% if messages %}
+    <div class="messages-container mb-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Search and Filter Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form method="GET" action="{% url 'job_list' %}" class="row g-3 align-items-end">
+                <div class="col-md-4 col-12">
+                    <label for="id_q" class="form-label">Search Jobs</label>
+                    <input type="text" class="form-control" id="id_q" name="q" value="{{ query|default_if_none:''}}" placeholder="Title, company, location...">
+                </div>
+                <div class="col-md-3 col-12">
+                    <label for="id_company" class="form-label">Company</label>
+                    <select class="form-select" id="id_company" name="company">
+                        <option value="">All Companies</option>
+                        {% for company in companies %}
+                        <option value="{{ company.id }}" {% if company_filter|slugify == company.id|slugify %}selected{% endif %}>{{ company.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 col-12">
+                    <label for="id_job_type" class="form-label">Job Type</label>
+                    <select class="form-select" id="id_job_type" name="job_type">
+                        <option value="">All Types</option>
+                        {% for type_value, type_label in job_types %}
+                        <option value="{{ type_value }}" {% if job_type_filter == type_value %}selected{% endif %}>{{ type_label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-1 col-6">
+                    <button type="submit" class="btn btn-info w-100">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="card shadow-sm">
+        <div class="card-body">
+            {% if jobs %}
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Company</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Salary</th>
+                            <th>Vacancies</th>
+                            <th>Posted</th>
+                            <th>Status</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for job in jobs %}
+                        <tr>
+                            <td>{{ job.title }}</td>
+                            <td>{{ job.company.name }}</td>
+                            <td>{{ job.category.name|default:"N/A" }}</td>
+                            <td>{{ job.get_job_type_display }}</td>
+                            <td>{{ job.location|default:"N/A" }}</td>
+                            <td>{{ job.salary|default:"N/A" }}</td>
+                            <td>{{ job.vacancy }}</td>
+                            <td>{{ job.posted_at|date:"M d, Y" }}</td>
+                            <td>
+                                <form action="{% url 'job_toggle_status' job.pk %}" method="POST" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm {% if job.is_active %}btn-success{% else %}btn-warning{% endif %}">
+                                        {% if job.is_active %}Active{% else %}Inactive{% endif %}
+                                    </button>
+                                </form>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'job_update' job.pk %}" class="btn btn-sm btn-info me-2" title="Edit Job">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'job_delete' job.pk %}" class="btn btn-sm btn-danger" title="Delete Job">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <p class="text-center" style="color:var(--primary);font-weight:600;">No jobs found.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

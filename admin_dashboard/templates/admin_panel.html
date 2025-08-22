@@ -1,0 +1,189 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Admin Dashboard - Local Talentz{% endblock %}</title>
+    <!-- Bootstrap CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS for Dashboard -->
+    <link rel="stylesheet" href="{% static 'css/admin/admin_panel.css' %}">
+</head>
+<body>
+    
+    <!-- FIXED TOP NAVBAR  -->
+    <nav class="navbar navbar-expand-lg top-fixed-navbar">
+        <div class="container-fluid">
+            <!-- Admin Panel Title -->
+            <a class="navbar-brand-main" href="{% url 'admin_dashboard' %}">Admin Panel</a>
+
+            <!-- Right-aligned items: Post Job and Welcome Message -->
+            <ul class="navbar-nav ms-auto d-flex align-items-center"> 
+                <!-- Post Job Link -->
+                <li class="nav-item d-none d-md-block me-3"> 
+                    <a class="nav-link post-job-link" href="{% url 'post_job_selection' %}">Post Job</a>
+                </li>
+
+                <!-- Welcome Message -->
+                <li class="nav-item d-none d-md-block"> 
+                    <span class="nav-link welcome-text">Welcome, {{ request.user.username }}!</span>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Wrapper for Sidebar and Page Content -->
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class="border-end" id="sidebar-wrapper">
+            
+            <div class="list-group list-group-flush">
+                <a href="{% url 'admin_dashboard' %}" class="list-group-item list-group-item-action {% if current_page == 'dashboard' %}active{% endif %}">
+                    <i class="fas fa-chart-line me-2"></i>Dashboard
+                </a>
+
+                <a href="{% url 'company_list' %}" class="list-group-item list-group-item-action {% if current_page == 'manage_companies' or current_page == 'company_detail' or current_page == 'company_edit' or current_page == 'company_create' %}active{% endif %}">
+                    <i class="fas fa-building me-2"></i>Manage Companies
+                </a>
+
+                <a href="{% url 'job_list' %}" class="list-group-item list-group-item-action {%if current_page == 'manage_jobs' %}active{% endif %}">
+                    <i class="fas fa-briefcase me-2"></i>Manage Jobs
+                </a>
+
+                <a href="{% url 'job_seeker_list' %}" class="list-group-item list-group-item-action {% if current_page == 'manage_jobseekers' %}active{% endif %}">
+                    <i class="fas fa-users me-2"></i>Manage Job Seekers
+                </a>
+
+                <a href="{% url 'application_list' %}" class="list-group-item list-group-item-action {% if current_page == 'manage_applications' %}active{% endif %}">
+                    <i class="fas fa-file-alt me-2"></i>Manage Applications
+                </a>
+
+                <a href="{% url 'admin_settings' %}" class="list-group-item list-group-item-action {% if current_page ==  'admin_settings' %}active {% endif %}">
+                    <i class="fas fa-cogs me-2"></i>Admin Settings
+                </a>
+
+                <a href="{% url 'reports_dashboard' %}" class="list-group-item list-group-item-action {% if current_page == 'reports' %}active {% endif %}">
+                    <i class="fas fa-chart-area me-2"></i>Reports
+                </a>
+
+                <a href="{% url 'feedback_list' %}" class="list-group-item list-group-item-action {% if current_page == 'feedback_complaints' %}active{% endif %}">
+                    <i class="fas fa-comments me-2"></i>Feedback & Complaints
+                </a>
+
+                <a href="{% url 'send_notification' %}" class="list-group-item list-group-item-action {% if current_page == 'notifications_messaging' %}active {% endif %}">
+                    <i class="fas fa-bell me-2"></i>Notifications & Messaging
+                </a>
+                <!-- ADDED LOGOUT LINK BACK TO SIDEBAR -->
+                <a href="{% url 'logout' %}" class="list-group-item list-group-item-action mt-4">
+                    <i class="fas fa-sign-out-alt me-2"></i>Logout
+                </a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <!-- Mobile-only Hamburger Toggle Button -->
+            <button class="btn btn-outline-secondary toggle-btn-mobile" id="sidebarToggleMobile">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            {% block main_content %}
+            <div class="container-fluid py-4">
+                <h1 class="mt-4 mb-4 text-secondary">Dashboard</h1>
+
+                <!-- Summary Cards -->
+                <div class="row dashboard-cards-row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="dashboard-card companies">
+                            <i class="fas fa-building fa-2x mb-2 text-secondary"></i>
+                            <h3>{{ total_companies }}</h3>
+                            <p>Total Companies</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="dashboard-card users">
+                            <i class="fas fa-users fa-2x mb-2 text-secondary"></i>
+                            <h3>{{ total_users }}</h3>
+                            <p>Total Users/Candidates</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="dashboard-card jobs">
+                            <i class="fas fa-briefcase fa-2x mb-2 text-secondary"></i>
+                            <h3>{{ total_jobs_posted }}</h3>
+                            <p>Total Jobs Posted</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="dashboard-card applications">
+                            <i class="fas fa-file-invoice fa-2x mb-2 text-secondary"></i>
+                            <h3>{{ total_applications }}</h3>
+                            <p>Applications Submitted</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphs and other sections (placeholders) -->
+                <!-- <div class="row dashboard-cards-row">
+                    <div class="col-lg-6 mb-4">
+                        <div class="dashboard-card" style="border-left: 5px solid #17a2b8;">
+                            <h5>Monthly Statistics (Placeholder)</h5>
+                            <p>Graph will go here...</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-4">
+                        <div class="dashboard-card" style="border-left: 5px solid #28a745;">
+                            <h5>Recent Activities (Placeholder)</h5>
+                            <p>List of recent activities...</p>
+                        </div>
+                    </div>
+                </div> -->
+                <!-- Add more sections as per your sketches -->
+                {% endblock main_content %}
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- Menu Toggle Script -->
+    <script>
+        // Toggle sidebar on mobile button click
+        var sidebarToggleMobile = document.getElementById('sidebarToggleMobile');
+        if (sidebarToggleMobile) {
+            sidebarToggleMobile.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.getElementById('wrapper').classList.toggle('toggled');
+            });
+        }
+
+        // Auto-toggle sidebar based on screen width on load and resize
+        function adjustSidebarForScreenSize() {
+            var wrapper = document.getElementById('wrapper');
+            if (window.innerWidth >= 768) { // Desktop size
+                wrapper.classList.remove('toggled'); // Ensure sidebar is visible
+            } else { // Mobile size
+                wrapper.classList.add('toggled'); // Ensure sidebar is hidden
+            }
+        }
+
+        // Run on page load
+        window.addEventListener('load', adjustSidebarForScreenSize);
+        // Run on window resize
+        window.addEventListener('resize', adjustSidebarForScreenSize);
+    </script>
+   
+</body>
+</html>

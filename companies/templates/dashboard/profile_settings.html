@@ -1,0 +1,160 @@
+{% extends 'dashboard/company_view.html' %}
+{% load static %}
+
+{% block title %}Profile Settings{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/companies/profile_settings.css' %}">
+
+{% endblock %}
+
+{% block main_content %}
+    <div class="p-8">
+        <h1 class="text-3xl font-bold mb-2">Profile Settings</h1>
+        <p class="text-lg mb-6" style="color:var(--primary-dark);">Update your company information and details.</p>
+
+        <!-- Message Alerts -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show mb-3" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Company Profile Information Section -->
+        <div class="card p-6 mb-4">
+            <h2 class="h5 font-weight-bold mb-4">Company Profile</h2>
+            <form method="POST" enctype="multipart/form-data" action="{% url 'companies:profile_settings' %}">
+                {% csrf_token %}
+                <!-- Company Logo Section -->
+                <div class="mb-4">
+                    <label for="{{ form.logo.id_for_label }}" class="form-label font-weight-bold">Company Logo</label>
+                    <div class="d-flex align-items-center">
+                        {% if company.logo %}
+                            <img src="{{ company.logo.url }}" alt="Company Logo" class="rounded-circle me-3" style="width: 80px; height: 80px; object-fit: cover;">
+                        {% else %}
+                            <div class="rounded-circle me-3 bg-secondary text-white d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                                <i class="fas fa-image fa-2x"></i>
+                            </div>
+                        {% endif %}
+                        <div>
+                            {{ form.logo }}
+                            {% for error in form.logo.errors %}
+                                <div class="invalid-feedback d-block">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row g-4">
+                    <!-- Iterate over form fields, excluding logo and social links -->
+                    {% for field in form %}
+                        {% if field.name not in 'logo,linkedin_url,twitter_url,facebook_url' %}
+                            <div class="col-12 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label font-weight-bold">{{ field.label }}</label>
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                
+                <button type="submit" name="profile_submit" class="btn btn-primary mt-4 w-100">Save Profile Changes</button>
+            </form>
+        </div>
+
+        <!-- Social Media Links Section -->
+        <div class="card p-6 mb-4">
+            <h2 class="h5 font-weight-bold mb-4">Social Media</h2>
+            <form method="POST" action="{% url 'companies:profile_settings' %}">
+                {% csrf_token %}
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <label for="{{ form.linkedin_url.id_for_label }}" class="form-label font-weight-bold">LinkedIn URL</label>
+                        {{ form.linkedin_url }}
+                        {% for error in form.linkedin_url.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="{{ form.twitter_url.id_for_label }}" class="form-label font-weight-bold">Twitter URL</label>
+                        {{ form.twitter_url }}
+                        {% for error in form.twitter_url.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <label for="{{ form.facebook_url.id_for_label }}" class="form-label font-weight-bold">Facebook URL</label>
+                        {{ form.facebook_url }}
+                        {% for error in form.facebook_url.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" name="social_submit" class="btn btn-primary mt-4 w-100">Save Social Links</button>
+            </form>
+        </div>
+
+        <!-- Change Email Section -->
+        <div class="card p-6 mb-4">
+            <h2 class="h5 font-weight-bold mb-4">Change Email Address</h2>
+            <form method="POST" action="{% url 'companies:update_email' %}">
+                {% csrf_token %}
+                <div class="row g-4">
+                    <div class="col-12 col-md-6">
+                        <label for="{{ update_email_form.email.id_for_label }}" class="form-label font-weight-bold">New Email</label>
+                        {{ update_email_form.email }}
+                        {% for error in update_email_form.email.errors %}
+                            <div class="invalid-feedback d-block">{{ error }}</div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <button type="submit" name="email_submit" class="btn btn-primary mt-4 w-100">Update Email</button>
+            </form>
+        </div>
+
+        <!-- Change Password Section -->
+        <div class="card p-6">
+            <h2 class="h5 font-weight-bold mb-4">Change Password</h2>
+            {% if 'otp_verified' in request.session %}
+                <p class="text-success">OTP verified. Please enter your new password below.</p>
+                <form method="POST" action="{% url 'companies:change_password' %}">
+                    {% csrf_token %}
+                    <div class="row g-4">
+                        {% for field in change_password_form %}
+                            <div class="col-12 col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label font-weight-bold">{{ field.label }}</label>
+                                {{ field }}
+                                {% for error in field.errors %}
+                                    <div class="invalid-feedback d-block">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button type="submit" name="password_submit" class="btn btn-primary mt-4 w-100">Change Password</button>
+                </form>
+            {% else %}
+                <p>To change your password, a one-time password (OTP) will be sent to your registered email address.</p>
+                <form method="POST" action="{% url 'companies:send_otp' %}">
+                    {% csrf_token %}
+                    <button type="submit" name="send_otp_submit" class="btn btn-primary w-100">Send OTP to Email</button>
+                </form>
+
+                <div class="mt-4">
+                    <p>Enter OTP to verify:</p>
+                    <form method="POST" action="{% url 'companies:verify_otp' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" name="otp" class="form-control" placeholder="Enter OTP">
+                            <button type="submit" name="verify_otp_submit" class="btn btn-primary">Verify OTP</button>
+                        </div>
+                    </form>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock main_content %}

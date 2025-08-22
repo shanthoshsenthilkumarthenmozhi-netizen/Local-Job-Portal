@@ -1,0 +1,38 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Company Login{% endblock %}
+
+     {% block extra_head %}
+    <link rel="stylesheet" href="{% static 'css/admin/company_login.css' %}">{% endblock %}
+
+
+    {% block main_content %}
+    <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh; background: #f5f6fa;">
+        <div class="form-card shadow" style="background: #fff7f0; border-radius: 18px; padding: 2.5rem 2rem; max-width: 400px; width: 100%;">
+            <h2 class="text-center mb-4" style="color: #ff4500;">Company Login</h2>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="username" class="form-label" style="color: #333;">Username (Company ID):</label>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ username|default:'' }}" required style="background: #fff; border: 1px solid #ffdab9;">
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label" style="color: #333;">Password:</label>
+                    <input type="password" class="form-control" id="password" name="password" required style="background: #fff; border: 1px solid #ffdab9;">
+                </div>
+                <button type="submit" class="submit-btn w-100" style="background: linear-gradient(90deg, #ff4500 60%, #ff7f50 100%); color: #fff; border: none; border-radius: 8px; font-weight: 600; font-size: 1.1rem; padding: 0.7rem 0; box-shadow: 0 2px 8px rgba(255,69,0,0.08); transition: background 0.2s;">
+                    Login
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endblock main_content %}
+    

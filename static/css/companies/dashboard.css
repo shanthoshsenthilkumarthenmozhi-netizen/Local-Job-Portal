@@ -1,0 +1,191 @@
+:root {
+            --orangered: #ff4500;
+            --orangered-dark: #d93800;
+            --orangered-light: #ff7043;
+            --sidebar-bg: #fff3e6;
+            --sidebar-active: #ff7043;
+            --text-dark: #2d2d2d;
+            --card-bg: #fff;
+            --card-shadow: 0 2px 12px rgba(255, 69, 0, 0.08);
+        }
+        body {
+            background: linear-gradient(135deg, #fff3e6 0%, #ffe0cc 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+        }
+        .fixed-top-navbar {
+            background: var(--orangered);
+            color: #fff;
+            padding: 0.75rem 2rem;
+            box-shadow: 0 2px 8px rgba(255,69,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .company-logo {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            margin-right: 12px;
+            background: #fff;
+            object-fit: cover;
+            border: 2px solid var(--orangered-light);
+        }
+        .welcome-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+            letter-spacing: 0.5px;
+        }
+        .sidebar {
+            background: var(--sidebar-bg);
+            min-width: 220px;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+            position: sticky;
+            top: 60px;
+            box-shadow: 2px 0 8px rgba(255,69,0,0.08);
+        }
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--orangered-dark);
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s;
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+        .sidebar-menu a.active, .sidebar-menu a:hover {
+            background: var(--sidebar-active);
+            color: #fff;
+        }
+        .sidebar-menu i {
+            font-size: 1.25rem;
+        }
+        .main-wrapper {
+            display: flex;
+            flex-direction: row;
+            min-height: calc(100vh - 60px);
+        }
+        .content-area {
+            flex: 1;
+            padding: 2rem;
+            background: transparent;
+        }
+        .stat-card-reports {
+            background: var(--card-bg);
+            border-radius: 18px;
+            box-shadow: var(--card-shadow);
+            padding: 1.7rem 1.3rem;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: transform 0.15s, box-shadow 0.15s;
+            border-left: 6px solid var(--orangered);
+            position: relative;
+            overflow: hidden;
+        }
+        .stat-card-reports::after {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--orangered-light) 40%, transparent 70%);
+            opacity: 0.15;
+            z-index: 0;
+        }
+        .stat-card-reports:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 4px 20px rgba(255,69,0,0.15);
+        }
+        .stat-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.5rem;
+            z-index: 1;
+        }
+        .stat-card-icon {
+            font-size: 2rem;
+            color: var(--orangered);
+        }
+        .stat-card-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--orangered-dark);
+        }
+        .stat-card-count {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: var(--orangered);
+            margin-top: 0.5rem;
+            z-index: 1;
+            text-shadow: 0 2px 8px rgba(255,69,0,0.08);
+        }
+        .btn-orangered {
+            background: var(--orangered);
+            color: #fff;
+            border: none;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .btn-orangered:hover {
+            background: var(--orangered-dark);
+            color: #fff;
+        }
+        @media (max-width: 991px) {
+            .main-wrapper {
+                flex-direction: column;
+            }
+            .sidebar {
+                min-width: 100%;
+                min-height: auto;
+                position: static;
+                box-shadow: none;
+                padding: 1rem 0.5rem;
+            }
+            .content-area {
+                padding: 1rem;
+            }
+        }
+        @media (max-width: 767px) {
+            .fixed-top-navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 1rem;
+            }
+            .sidebar-menu a {
+                font-size: 1rem;
+                padding: 0.5rem 0.75rem;
+            }
+            .stat-card-reports {
+                padding: 1.1rem;
+            }
+            .stat-card-title {
+                font-size: 1rem;
+            }
+            .stat-card-count {
+                font-size: 1.5rem;
+            }
+        }
+        /* Extra: subtle hover effect for sidebar icons */
+        .sidebar-menu a i {
+            transition: color 0.2s;
+        }
+        .sidebar-menu a:hover i,
+        .sidebar-menu a.active i {
+            color: #fff;
+        }
+
+        

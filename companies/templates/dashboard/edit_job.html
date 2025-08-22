@@ -1,0 +1,64 @@
+{% extends 'dashboard/company_view.html' %}
+{% load static %}
+
+{% block title %}Edit Job: {{ job.title }}{% endblock %}
+
+{% block main_content %}
+    <div class="p-8">
+        <h1 class="text-3xl font-bold text-gray-800">Edit Job: {{ job.title }}</h1>
+        <p class="text-lg text-gray-600 mb-6">Update the details for this job posting below.</p>
+        <a href="{% url 'companies:my_jobs' %}" class="btn btn-outline-secondary btn-sm d-flex align-items-center">
+                <i class="fas fa-arrow-left me-2"></i> Back to My Jobs
+            </a>
+
+        <div class="card p-6">
+            <form method="post" action="{% url 'companies:edit_job' job.id %}">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.title.id_for_label }}" class="form-label font-weight-bold">{{ form.title.label }}</label>
+                        {{ form.title }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.vacancy.id_for_label }}" class="form-label font-weight-bold">{{ form.vacancy.label }}</label>
+                        {{ form.vacancy }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.category.id_for_label }}" class="form-label font-weight-bold">{{ form.category.label }}</label>
+                        {{ form.category }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.job_type.id_for_label }}" class="form-label font-weight-bold">{{ form.job_type.label }}</label>
+                        {{ form.job_type }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.location.id_for_label }}" class="form-label font-weight-bold">{{ form.location.label }}</label>
+                        {{ form.location }}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label for="{{ form.salary.id_for_label }}" class="form-label font-weight-bold">{{ form.salary.label }}</label>
+                        {{ form.salary }}
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.description.id_for_label }}" class="form-label font-weight-bold">{{ form.description.label }}</label>
+                    {{ form.description }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.requirements.id_for_label }}" class="form-label font-weight-bold">{{ form.requirements.label }}</label>
+                    {{ form.requirements }}
+                </div>
+                <div class="mb-4">
+                    <label for="{{ form.responsibilities.id_for_label }}" class="form-label font-weight-bold">{{ form.responsibilities.label }}</label>
+                    {{ form.responsibilities }}
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg mt-3">Update Job</button>
+            </form>
+        </div>
+    </div>
+{% endblock main_content %}

@@ -1,0 +1,119 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Reports Dashboard{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="orangered-text fw-bold mb-0">Reports Dashboard</h1>
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-orangered shadow-sm">Back to Dashboard</a>
+    </div>
+
+    <div class="row">
+        {# Companies Overview Card #}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-building fa-3x orangered-text me-3"></i>
+                        <div>
+                            <h5 class="card-title fw-bold">Companies</h5>
+                            <h2 class="card-text mb-0">{{ total_companies }}</h2>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-top border-bottom">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Active
+                            <span class="badge bg-success rounded-pill">{{ total_active_companies }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Approved
+                            <span class="badge bg-primary rounded-pill">{{ total_approved_companies }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        {# Jobs Overview Card #}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-briefcase fa-3x text-info me-3"></i>
+                        <div>
+                            <h5 class="card-title fw-bold">Jobs</h5>
+                            <h2 class="card-text mb-0">{{ total_jobs }}</h2>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-top border-bottom">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Active
+                            <span class="badge bg-success rounded-pill">{{ total_active_jobs }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pending Approval
+                            <span class="badge bg-warning rounded-pill">{{ total_pending_jobs }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Closed
+                            <span class="badge bg-danger rounded-pill">{{ total_closed_jobs }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {# Job Seekers & Applications Overview Card #}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-users fa-3x text-success me-3"></i>
+                        <div>
+                            <h5 class="card-title fw-bold">Job Seekers</h5>
+                            <h2 class="card-text mb-0">{{ total_job_seekers }}</h2>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-top border-bottom">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Active
+                            <span class="badge bg-success rounded-pill">{{ total_active_job_seekers }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {# Applications Overview Card #}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="fas fa-file-alt fa-3x text-warning me-3"></i>
+                        <div>
+                            <h5 class="card-title fw-bold">Applications</h5>
+                            <h2 class="card-text mb-0">{{ total_applications }}</h2>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush border-top border-bottom">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Pending
+                            <span class="badge bg-warning rounded-pill">{{ total_pending_applications }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Reviewed
+                            <span class="badge bg-info rounded-pill">{{ total_reviewed_applications }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            Hired
+                            <span class="badge bg-success rounded-pill">{{ total_hired_applications }}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

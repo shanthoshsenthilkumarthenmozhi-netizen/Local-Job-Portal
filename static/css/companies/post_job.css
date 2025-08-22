@@ -1,0 +1,48 @@
+.orangered-bg {
+        background: linear-gradient(90deg, orangered 60%, #ffb366 100%);
+    }
+    .orangered-btn {
+        background-color: orangered;
+        color: #fff;
+        border: none;
+        transition: background 0.2s;
+    }
+    .orangered-btn:hover {
+        background-color: #ff6600;
+    }
+    .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(255, 69, 0, 0.08);
+        border: 1px solid #ffe5d0;
+    }
+    .form-label {
+        color: orangered;
+        font-weight: 600;
+    }
+    input, select, textarea {
+        border: 1px solid #ffb366 !important;
+        border-radius: 8px !important;
+        padding: 10px !important;
+        width: 100%;
+        margin-top: 4px;
+        margin-bottom: 8px;
+        font-size: 1rem;
+        transition: border-color 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+        border-color: orangered !important;
+        outline: none;
+    }
+    @media (max-width: 768px) {
+        .row {
+            display: block;
+        }
+        .col-md-6 {
+            width: 100% !important;
+            margin-bottom: 16px;
+        }
+        .card {
+            padding: 1rem !important;
+        }
+    }

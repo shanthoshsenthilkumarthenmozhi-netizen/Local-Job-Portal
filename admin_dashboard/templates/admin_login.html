@@ -1,0 +1,87 @@
+<!-- G:\LocalTalentz\admin_dashboard\templates\admin_login.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Local Talentz</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Google Fonts - Inter (as per your main site) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom Login Page CSS -->
+    <link rel="stylesheet" href="{% static 'css/admin/admin_login.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="screen">
+            <div class="screen__content">
+            
+                <h1>Admin Login</h1> 
+                <form class="login" method="post">
+                    {% csrf_token %}
+
+                    <!-- Display non-field errors (like invalid credentials) -->
+                    {% if form.non_field_errors %}
+                        <ul class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+
+                    <div class="login__field">
+                        <i class="login__icon fas fa-user"></i>
+                        <!-- Render username field -->
+                        <input type="text" class="login__input"
+                               name="{{ form.username.name }}"
+                               id="{{ form.username.id_for_label }}"
+                               placeholder="User name / Email"
+                               value="{{ form.username.value|default:'' }}"
+                               {% if form.username.field.required %}required{% endif %}>
+                        {% if form.username.errors %}
+                            <ul class="errorlist">
+                                {% for error in form.username.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <div class="login__field">
+                        <i class="login__icon fas fa-lock"></i>
+                        <!-- Render password field -->
+                        <input type="password" class="login__input"
+                               name="{{ form.password.name }}"
+                               id="{{ form.password.id_for_label }}"
+                               placeholder="Password"
+                               {% if form.password.field.required %}required{% endif %}>
+                        {% if form.password.errors %}
+                            <ul class="errorlist">
+                                {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="button login__submit">
+                        <span class="button__text">Log In Now</span>
+                        <i class="button__icon fas fa-chevron-right"></i>
+                    </button>
+                </form>
+                <a href="{% url 'home' %}" class="back-button">
+                    <i class="fas fa-arrow-left"></i>Back to Website
+                </a>
+            </div>
+            <div class="screen__background">
+                <span class="screen__background__shape screen__background__shape4"></span>
+                <span class="screen__background__shape screen__background__shape3"></span>
+                <span class="screen__background__shape screen__background__shape2"></span>
+                <span class="screen__background__shape screen__background__shape1"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

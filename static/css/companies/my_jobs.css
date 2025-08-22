@@ -1,0 +1,158 @@
+ :root {
+        --orangered: #ff4500;
+        --orangered-light: #ff7043;
+        --orangered-dark: #d84315;
+        --bg-light: #fff7f3;
+        --text-dark: #2d2d2d;
+    }
+    body {
+        background: var(--bg-light);
+    }
+    .main-header {
+        background: linear-gradient(90deg, var(--orangered), var(--orangered-light));
+        color: #fff;
+        border-radius: 12px;
+        padding: 32px 24px;
+        box-shadow: 0 4px 16px rgba(255, 69, 0, 0.08);
+        margin-bottom: 32px;
+    }
+    .main-header h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+    .main-header .btn {
+        background: #fff;
+        color: var(--orangered);
+        border: none;
+        font-weight: 600;
+        box-shadow: 0 2px 8px rgba(255, 69, 0, 0.08);
+        transition: background 0.2s, color 0.2s;
+    }
+    .main-header .btn:hover {
+        background: var(--orangered-dark);
+        color: #fff;
+    }
+    .search-filter-section {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(255, 69, 0, 0.07);
+        margin-bottom: 24px;
+        padding: 24px;
+    }
+    .search-filter-section input,
+    .search-filter-section select {
+        border: 2px solid var(--orangered-light);
+        border-radius: 8px;
+        transition: border 0.2s;
+    }
+    .search-filter-section input:focus,
+    .search-filter-section select:focus {
+        border-color: var(--orangered);
+        box-shadow: 0 0 0 2px rgba(255, 69, 0, 0.15);
+    }
+    .search-filter-section .btn-outline-primary {
+        border-color: var(--orangered);
+        color: var(--orangered);
+        font-weight: 600;
+        border-radius: 8px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .search-filter-section .btn-outline-primary:hover {
+        background: var(--orangered);
+        color: #fff;
+    }
+    .card {
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 4px 16px rgba(255, 69, 0, 0.09);
+        border: none;
+    }
+    .table th {
+        background: var(--orangered-light);
+        color: #fff;
+        font-weight: 700;
+        border: none;
+    }
+    .table td {
+        color: var(--text-dark);
+        vertical-align: middle;
+    }
+    .badge.bg-primary {
+        background: var(--orangered);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 12px;
+    }
+    .badge.bg-secondary {
+        background: var(--orangered-light);
+        color: #fff;
+        font-weight: 600;
+        border-radius: 6px;
+        padding: 6px 12px;
+    }
+    .btn-outline-info {
+        border-color: var(--orangered-light);
+        color: var(--orangered-light);
+        border-radius: 8px;
+    }
+    .btn-outline-info:hover {
+        background: var(--orangered-light);
+        color: #fff;
+    }
+    .btn-outline-warning {
+        border-color: var(--orangered-dark);
+        color: var(--orangered-dark);
+        border-radius: 8px;
+    }
+    .btn-outline-warning:hover {
+        background: var(--orangered-dark);
+        color: #fff;
+    }
+    .btn-outline-secondary {
+        border-color: #aaa;
+        color: #aaa;
+        border-radius: 8px;
+    }
+    .btn-outline-secondary:hover {
+        background: #aaa;
+        color: #fff;
+    }
+    .btn-outline-success {
+        border-color: var(--orangered);
+        color: var(--orangered);
+        border-radius: 8px;
+    }
+    .btn-outline-success:hover {
+        background: var(--orangered);
+        color: #fff;
+    }
+    .btn-outline-danger {
+        border-color: #e53935;
+        color: #e53935;
+        border-radius: 8px;
+    }
+    .btn-outline-danger:hover {
+        background: #e53935;
+        color: #fff;
+    }
+    @media (max-width: 768px) {
+        .main-header {
+            padding: 20px 12px;
+            font-size: 1.5rem;
+        }
+        .search-filter-section {
+            padding: 16px;
+        }
+        .card {
+            padding: 8px;
+        }
+        .table th, .table td {
+            font-size: 0.95rem;
+        }
+        .d-flex.gap-2 {
+            flex-direction: column;
+            gap: 8px !important;
+        }
+    }

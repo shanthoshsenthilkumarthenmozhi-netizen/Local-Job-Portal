@@ -1,0 +1,318 @@
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif; /* Using Inter as per your main site */
+}
+
+/* Body Background - Orangered Gradient */
+body {
+    background: rgb(249, 246, 246);/* linear-gradient(90deg, #ff7e5f, #feb47b); Soft gradient background */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    overflow: hidden; /* Hide overflow from background shapes */
+}
+
+/* Container for the login screen */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 900px; /* Increased max-width for the overall container */
+    padding: 20px; /* Add some padding for smaller screens */
+}
+
+/* Screen (main login card) */
+.screen {
+    background: linear-gradient(90deg, #ff4d4d, orangered); /* Stronger gradient for the screen */
+    position: relative;
+    height: 600px;
+    width: 420px; /* Increased width for better visualization */
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.2); /* Soft shadow */
+    border-radius: 20px; /* Rounded corners */
+    display: flex;
+    flex-direction: column; /* Stack content and background */
+    overflow: hidden; /* Important for shapes */
+}
+
+/* Content area for form */
+.screen__content {
+    z-index: 2; /* Increased z-index to ensure content is above all background shapes */
+    position: relative;
+    height: 100%;
+    padding: 30px; /* Consistent padding */
+    display: flex; /* Use flexbox for vertical centering of content */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; /* Center horizontally within content area */
+}
+
+/* Background shapes */
+.screen__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    -webkit-clip-path: inset(0 0 0 0);
+    clip-path: inset(0 0 0 0);
+    pointer-events: none; /* Make background non-interactive */
+}
+
+.screen__background__shape {
+    transform: rotate(45deg);
+    position: absolute;
+}
+
+.screen__background__shape1 {
+    height: 520px;
+    width: 520px;
+    background: #FFF;
+    top: -50px;
+    right: 120px;
+    border-radius: 0 72px 0 0;
+}
+
+.screen__background__shape2 {
+    height: 220px;
+    width: 220px;
+    background: #ff5722; /* Orangered */
+    top: -172px;
+    right: 0;
+    border-radius: 32px;
+}
+
+.screen__background__shape3 {
+    height: 540px;
+    width: 190px;
+    background: rgba(255, 94, 0, 0.8); /* Slightly transparent Orangered */
+    top: -24px;
+    right: 0;
+    border-radius: 32px;
+}
+
+.screen__background__shape4 {
+    height: 400px;
+    width: 200px;
+    background: orangered; /* Darker orangered */
+    top: 420px;
+    right: 50px;
+    border-radius: 60px;
+}
+
+/* H1 Styling - Attractive, Proper Color & Place */
+h1 {
+    font-size: 2.8rem; /* Larger and attractive font size */
+    color: #6B2D00; /* Changed H1 color to a dark, rich brown for better visibility */
+    text-align: center; /* Ensures it's centered */
+    margin-bottom: 2rem; /* Space below the heading */
+    font-weight: 700; /* Bolder font */
+    letter-spacing: 1px; /* Slightly spaced letters */
+    text-shadow: 2px 2px 6px rgba(0,0,0,0.5); /* Stronger shadow for better visibility */
+    width: 100%; /* Ensure it takes full width to center effectively */
+    position: relative; /* Needed for z-index to work against siblings */
+    z-index: 3; /* Ensure H1 is above everything else if needed */
+}
+
+/* Login Form Styling */
+.login {
+    width: 100%; /* Ensure form takes full available width within its container */
+    padding: 0px 30px; /* Adjust padding to match content */
+    padding-top: 20px; /* Reduced top padding as H1 already has margin */
+    display: flex; /* Use flexbox to organize fields and button */
+    flex-direction: column;
+    align-items: center; /* Center form elements horizontally */
+}
+
+.login__field {
+    padding: 10px 0px; /* Reduced vertical padding */
+    position: relative;
+    width: 100%; /* Ensure fields take full width within form */
+}
+
+.login__icon {
+    position: absolute;
+    top: 22px; /* Adjusted to align with input text */
+    font-size: 1.1em;
+    color: #ff5722; /* Orangered icon */
+}
+
+.login__input {
+    border: none;
+    border-bottom: 2px solid #D1D1D4; /* Light gray */
+    background: none;
+    padding: 10px 30px; /* Adjusted padding to accommodate icon */
+    font-weight: 700;
+    width: calc(100% - 30px); /* Calculate width to leave space for icon */
+    transition: .2s;
+    color: #4e4e4e; /* Darker text color */
+}
+
+.login__input:active,
+.login__input:focus,
+.login__input:hover {
+    outline: none;
+    border-bottom-color: #ff5722; /* Orangered on focus/hover */
+}
+
+/* Login Button */
+.button {
+    background: #FFF;
+    font-size: 1.2rem; /* Attractive button font size */
+    margin-top: 30px;
+    padding: 16px 20px;
+    border-radius: 26px;
+    border: 1px solid #D4D3E8;
+    text-transform: uppercase;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    width: 100%; /* Ensure button takes full width */
+    color: orangered; /* Orangered text on white button */
+    box-shadow: 0px 2px 2px orangered; /* Orangered shadow */
+    cursor: pointer;
+    transition: .2s;
+    justify-content: center;
+}
+
+.button:active,
+.button:focus,
+.button:hover {
+    border-color: #ff5722; /* Stronger orangered border */
+    outline: none;
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0px 4px 6px orangered; /* Enhanced shadow */
+    background-color: orangered; /* Fill with color on hover */
+    color: #fff; /* White text on hover */
+}
+
+.button__text {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.button__icon {
+    font-size: 1.5rem; /* Larger icon */
+    margin-left: 10px;
+    color: orangered; /* Icon color */
+    transition: .2s;
+}
+
+.login__submit:hover .button__icon {
+    color: #fff; /* White icon on hover */
+}
+
+/* Error Message Styling */
+.errorlist {
+    list-style: none; /* Remove bullet points */
+    padding: 0;
+    margin: 0 0 15px 0;
+    color: #fff; /* White text for errors */
+    background-color: rgb(207, 7, 7); /* Semi-transparent red background */
+    border-radius: 5px;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: left;
+    width: 100%; /* Ensure error list takes full width */
+}
+.errorlist li {
+    margin-bottom: 5px;
+}
+
+/* Hide default Django labels */
+.login label {
+    display: none;
+}
+
+/* Back button */
+.back-button{
+    margin-top:25px;
+    font-size:1.1rem;
+    color:orangered;
+    text-decoration:none;
+    display:flex;
+    align-items:center;
+    padding:8px 15px;
+    border-radius:20px;
+    background-color:#f4f3f2;
+    transition:background-color 0.2s ease, transform 0.2s ease,color 0.2s ease;
+}
+
+.back-button i{
+    margin-right:8px;
+    font-size:1.2rem;
+    color:#ff5722;
+}
+
+.back-button:hover{
+    background-color:rgba(246, 240, 240, 0.2);
+    transform:translateY(-2px);
+    color:#fff;
+}
+
+/* Responsive adjustments for the screen */
+@media (max-width: 768px) {
+    .screen {
+        height: auto; /* Auto height on smaller screens */
+        min-height: 550px; /* Minimum height for better appearance */
+        width: 90%; /* Take more width on smaller screens */
+        margin: 20px 0; /* Add vertical margin */
+        border-radius: 10px; /* Slightly less rounded corners */
+    }
+    .screen__background__shape1,
+    .screen__background__shape2,
+    .screen__background__shape3,
+    .screen__background__shape4 {
+        /* Scale down background shapes on smaller screens */
+        transform: scale(0.7) rotate(45deg);
+        opacity: 0.7; /* Make them slightly less prominent */
+    }
+    .screen__background__shape1 { top: -20px; right: 80px; }
+    .screen__background__shape2 { top: -100px; right: 0; }
+    .screen__background__shape3 { top: 0; right: -50px; }
+    .screen__background__shape4 { top: 300px; right: 20px; }
+}
+
+@media (max-width: 480px) {
+    .screen {
+        width: 95%; /* Even more width on very small screens */
+        min-height: 500px;
+        padding: 10px;
+    }
+    .screen__content {
+        padding: 20px;
+    }
+    h1 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+    }
+    .login__input {
+        width: calc(100% - 30px); /* Maintain input width */
+    }
+    .button {
+        font-size: 1rem;
+        padding: 14px 18px;
+    }
+}
+
+@media (max-width: 400px) {
+    .screen {
+        width: 100%;
+        height: 100vh; /* Full height on very narrow screens */
+        border-radius: 0;
+        box-shadow: none; /* No shadow on full screen */
+    }
+    .container {
+        padding: 0;
+    }
+    .login {
+        padding: 20px;
+        padding-top: 80px; /* Adjust padding for full screen */
+    }
+}

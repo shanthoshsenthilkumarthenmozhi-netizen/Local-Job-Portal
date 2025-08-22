@@ -1,0 +1,108 @@
+{% extends 'dashboard/company_view.html' %}
+{% load static %}
+
+{% block title %}Manage My Jobs{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/companies/my_jobs.css' %}">
+<style>
+   
+</style>
+{% endblock %}
+
+{% block main_content %}
+    <div class="p-0 p-md-8">
+        <div class="main-header d-flex justify-content-between align-items-center mb-4 flex-wrap">
+            <h1>Manage My Jobs</h1>
+            <!-- <a href="{% url 'companies:post_job' %}" class="btn shadow-sm">
+                <i class="fas fa-plus-circle fa-sm"></i> Post a New Job
+            </a> -->
+        </div>
+        <p class="text-lg text-gray-600 mb-6" style="color: var(--orangered-dark); font-weight: 500;">View and manage all your job postings and their applicants.</p>
+
+        <!-- Search and Filter Section -->
+        <div class="search-filter-section mb-5">
+            <div class="row align-items-center">
+                <div class="col-md-6 mb-3 mb-md-0">
+                    <input type="text" class="form-control" placeholder="Search by job title...">
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <select class="form-select">
+                        <option selected>Filter by Status</option>
+                        <option value="active">Active</option>
+                        <option value="paused">Paused</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-outline-primary w-100">Apply Filters</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Job List Table -->
+        <div class="card p-4">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">Job Title</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Applicants</th>
+                            <th scope="col">Posted On</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if all_jobs %}
+                            {% for job in all_jobs %}
+                            <tr>
+                                <td>{{ job.title }}</td>
+                                <td>
+                                    <span class="badge bg-primary">{{ job.status }}</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-secondary">{{ job.application_count }}</span>
+                                </td>
+                                <td>{{ job.posted_at|date:"M d, Y" }}</td>
+                                <td>
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <a href="{% url 'companies:manage_applicants' job.id %}" class="btn btn-outline-info btn-sm" title="View Applicants">
+                                            <i class="fas fa-users"></i>
+                                        </a>
+                                        <a href="{% url 'companies:edit_job' job.id %}" class="btn btn-outline-warning btn-sm" title="Edit Job">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <form method="POST" action="{% url 'companies:toggle_job_status' job.id %}">
+                                            {% csrf_token %}
+                                            {% if job.status == 'active' %}
+                                                <button type="submit" class="btn btn-outline-secondary btn-sm" title="Pause Job">
+                                                    <i class="fas fa-pause"></i>
+                                                </button>
+                                            {% else %}
+                                                <button type="submit" class="btn btn-outline-success btn-sm" title="Activate Job">
+                                                    <i class="fas fa-play"></i>
+                                                </button>
+                                            {% endif %}
+                                        </form>
+                                        <form method="post" action="{% url 'companies:delete_job' job.id %}" onsubmit="return confirm('Are you sure you want to delete this job?');">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-outline-danger btn-sm" title="Delete Job">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted">You haven't posted any jobs yet.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

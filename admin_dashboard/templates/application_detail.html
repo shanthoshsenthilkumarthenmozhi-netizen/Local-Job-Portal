@@ -1,0 +1,133 @@
+{% extends 'admin_panel.html' %}
+{% load static %}
+
+{% block title %}Application Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background: #fff8f4;
+    }
+    .orangered-bg {
+        background: orangered !important;
+        color: #fff !important;
+    }
+    .orangered-text {
+        color: orangered !important;
+    }
+    .btn-orangered {
+        background: orangered;
+        color: #fff;
+        border: none;
+        transition: background 0.2s;
+    }
+    .btn-orangered:hover, .btn-orangered:focus {
+        background: #d84315;
+        color: #fff;
+    }
+    .card {
+        border: none;
+        border-radius: 1rem;
+        background: #fff;
+    }
+    .card-title {
+        color: #222;
+        font-weight: 700;
+    }
+    .card-subtitle a {
+        color: orangered;
+        font-weight: 500;
+    }
+    .badge.bg-secondary {
+        background: #222;
+        color: #fff;
+        font-size: 1em;
+        padding: 0.5em 1em;
+        border-radius: 1em;
+    }
+    .form-select:focus {
+        border-color: orangered;
+        box-shadow: 0 0 0 0.2rem rgba(255,69,0,.15);
+    }
+    .bg-light {
+        background: #fff3e6 !important;
+    }
+    @media (max-width: 767px) {
+        .row {
+            flex-direction: column;
+        }
+        .col-md-6 {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+        .d-flex.justify-content-between {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+        .d-flex.justify-content-between .btn {
+            margin-top: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 class="orangered-text fw-bold mb-0">Application Details</h1>
+        <a href="{% url 'application_list' %}" class="btn btn-orangered shadow-sm">Back to Applications</a>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h2 class="card-title mb-1">{{ application.job.title }}</h2>
+            <h6 class="card-subtitle mb-3 text-muted">
+                by <a href="{% url 'job_seeker_detail' application.job_seeker.pk %}" class="text-decoration-none orangered-text">{{ application.job_seeker.user.first_name }} {{ application.job_seeker.user.last_name }}</a>
+                for <a href="{% url 'job_update' application.job.pk %}" class="text-decoration-none orangered-text">{{ application.job.company.name }}</a>
+            </h6>
+            <hr>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <p><strong>Job Title:</strong> <span class="text-dark">{{ application.job.title }}</span></p>
+                    <p><strong>Applicant Name:</strong> <span class="text-dark">{{ application.job_seeker.user.first_name }} {{ application.job_seeker.user.last_name }}</span></p>
+                    <p><strong>Applied On:</strong> <span class="text-dark">{{ application.applied_at|date:"F d, Y" }}</span></p>
+                    <p><strong>Resume:</strong>
+                        {% if application.job_seeker.resume %}
+                        <a href="{{ application.job_seeker.resume.url }}" target="_blank" class="text-decoration-none orangered-text fw-semibold">View Resume</a>
+                        {% else %}
+                        <span class="text-muted">N/A</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <p><strong>Email:</strong> <a href="mailto:{{ application.job_seeker.user.email }}" class="text-decoration-none orangered-text">{{ application.job_seeker.user.email }}</a></p>
+                    <p><strong>Phone:</strong> <span class="text-dark">{{ application.job_seeker.phone|default:"N/A" }}</span></p>
+                    <p><strong>Current Status:</strong>
+                        <span class="badge bg-secondary">{{ application.get_status_display }}</span>
+                    </p>
+                    <h5 class="mt-4 mb-2 orangered-text">Update Status</h5>
+                    <form action="{% url 'application_update_status' application.pk %}" method="post" class="d-flex align-items-center flex-wrap gap-2">
+                        {% csrf_token %}
+                        <select name="status" class="form-select me-2" required style="max-width: 180px;">
+                            {% for status_value, status_label in status_choices %}
+                                <option value="{{ status_value }}" {% if application.status == status_value %}selected{% endif %}>
+                                    {{ status_label }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-orangered">Update</button>
+                    </form>
+                </div>
+            </div>
+            <h4 class="mt-4 orangered-text">Job Details</h4>
+            <div class="bg-light p-3 rounded shadow-sm">
+                <p><strong>Company:</strong> <span class="text-dark">{{ application.job.company.name }}</span></p>
+                <p><strong>Location:</strong> <span class="text-dark">{{ application.job.location }}</span></p>
+                <p><strong>Job Description:</strong> <span class="text-dark">{{ application.job.description|linebreaksbr }}</span></p>
+                <p><strong>Requirements:</strong> <span class="text-dark">{{ application.job.requirements|linebreaksbr }}</span></p>
+                <p><strong>Responsibilities:</strong> <span class="text-dark">{{ application.job.responsibilities|linebreaksbr }}</span></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}
