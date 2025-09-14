@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin_dashboard/', include('admin_dashboard.urls')),
     path('users/', include('users.urls')),
     path('companies/', include('companies.urls', namespace='companies')),
+    # path("jobseeker/", include("users.urls")),
+
 ]
 
 #Serve static files in development

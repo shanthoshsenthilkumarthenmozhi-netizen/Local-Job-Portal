@@ -58,21 +58,51 @@ class Company(models.Model):
     
 #models for job seekers/users
 class JobSeeker(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE, related_name='jobseeker_profile',verbose_name="User Account")
-    phone=models.CharField(max_length=20, blank=True, null=True, verbose_name="Phone NUmber")
-    resume=models.FileField(upload_to='resumes/', blank=True, null=True, verbose_name="Resume File")
-    skills=models.TextField(blank=True, null=True, verbose_name="Skills (comma-separated)")
-    experience=models.TextField(blank=True, null=True, verbose_name="Experience Details")
-    is_active=models.BooleanField(default=True, verbose_name="Is Active")
-    created_at=models.DateTimeField(auto_now_add=True, verbose_name="Created At")
-    updated_at=models.DateTimeField(auto_now=True, verbose_name="Last Updated")
+    # Basic info
+    name = models.CharField(max_length=100)
+    email = models.EmailField(unique=True, null=False)
 
-    class Meta:
-        verbose_name_plural= "Job Seekers"
-        ordering=['user__first_name','user__last_name'] #Order by user's name
+    username = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=100)  # store hashed later
+    phone = models.CharField(max_length=15, blank=True, null=True)
+
+    # Profile details
+    dob = models.DateField(blank=True, null=True)
+    gender = models.CharField(
+        max_length=10,
+        choices=[("Male", "Male"), ("Female", "Female"), ("Other", "Other")],
+        blank=True,
+        null=True
+    )
+    address = models.TextField(blank=True, null=True)
+    profile_pic = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+
+    # Professional details
+    education = models.CharField(max_length=200, blank=True, null=True)  # e.g. B.Tech CSE
+    experience = models.IntegerField(default=0)  # in years
+    skills = models.TextField(blank=True, null=True)  # comma separated
+    resume = models.FileField(upload_to="resumes/", blank=True, null=True)
+
+    # Extra
+    linkedin = models.URLField(blank=True, null=True)
+    github = models.URLField(blank=True, null=True)
+    expected_salary = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    availability = models.CharField(max_length=100, blank=True, null=True)  # e.g. "Immediate", "30 days"
+
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.first_name} {self.user.last_name} ({self.user.username})"
+        return self.name
+    
+class JobApplication(models.Model):
+    jobseeker = models.ForeignKey("admin_dashboard.JobSeeker", on_delete=models.CASCADE)
+    job = models.ForeignKey("admin_dashboard.Job", on_delete=models.CASCADE)
+    applied_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.jobseeker.name} applied for {self.job.title}"
+
     
 #model for job posting
 class Job(models.Model):

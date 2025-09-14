@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}JobSeeker{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --theme-main: orangered;
+            --theme-contrast: #fff;
+            --sidebar-bg: #fff7f3;
+            --sidebar-link: #d84315;
+            --sidebar-link-hover: orangered;
+            --navbar-bg: orangered;
+            --navbar-link: #fff;
+            --navbar-link-hover: #ffe5d0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .sidebar {
+            min-height: 100vh;
+            background-color: var(--sidebar-bg);
+            padding-top: 1rem;
+            border-right: 1px solid #ffd6c2;
+        }
+        .sidebar a {
+            color: var(--sidebar-link);
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: 500;
+            transition: background 0.2s, color 0.2s;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: var(--sidebar-link-hover);
+            color: var(--theme-contrast);
+        }
+        .navbar {
+            background-color: var(--navbar-bg) !important;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            color: var(--theme-contrast) !important;
+        }
+        .navbar-nav .nav-link {
+            color: var(--navbar-link) !important;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
+            color: var(--navbar-link-hover) !important;
+        }
+        .content {
+            padding: 20px;
+        }
+        @media (max-width: 768px) {
+            .sidebar {
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'jobseeker_dashboard' %}">LocalTalentZ</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'jobseeker_dashboard' %}">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'apply_job' 1 %}">Apply Jobs</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'logout_jobseeker' %}">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Layout -->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="position-sticky">
+                    <a href="{% url 'jobseeker_dashboard' %}">🏠 Dashboard</a>
+                    <a href="#">📄 My Applications</a>
+                    <a href="#">👤 Profile</a>
+                    <a href="#">⚙️ Settings</a>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
+                {% block content %}
+                <!-- Page-specific content goes here -->
+                {% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
