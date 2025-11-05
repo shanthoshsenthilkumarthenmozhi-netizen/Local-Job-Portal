@@ -9,7 +9,7 @@
         :root {
             --theme-main: orangered;
             --theme-contrast: #fff;
-            --sidebar-bg: #fff7f3;
+            --sidebar-bg: #fff3e6;
             --sidebar-link: #d84315;
             --sidebar-link-hover: orangered;
             --navbar-bg: orangered;
@@ -17,49 +17,101 @@
             --navbar-link-hover: #ffe5d0;
         }
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background-color: #f8f9fa;
-        }
-        .sidebar {
-            min-height: 100vh;
-            background-color: var(--sidebar-bg);
-            padding-top: 1rem;
-            border-right: 1px solid #ffd6c2;
-        }
-        .sidebar a {
-            color: var(--sidebar-link);
-            display: block;
-            padding: 10px 15px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: 500;
-            transition: background 0.2s, color 0.2s;
-        }
-        .sidebar a:hover, .sidebar a.active {
-            background-color: var(--sidebar-link-hover);
-            color: var(--theme-contrast);
         }
         .navbar {
             background-color: var(--navbar-bg) !important;
+            min-height: 70px;
+            box-shadow: 0 2px 8px rgba(255, 87, 34, 0.08);
         }
         .navbar-brand {
             font-weight: bold;
+            font-size: 2rem;
             color: var(--theme-contrast) !important;
+            letter-spacing: 1px;
         }
         .navbar-nav .nav-link {
             color: var(--navbar-link) !important;
-            font-weight: 500;
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-left: 1rem;
             transition: color 0.2s;
         }
         .navbar-nav .nav-link:hover, .navbar-nav .nav-link.active {
             color: var(--navbar-link-hover) !important;
         }
-        .content {
-            padding: 20px;
+        .sidebar {
+            min-height: 100vh;
+            background-color: var(--sidebar-bg);
+            padding: 2rem 0.5rem 2rem 0.5rem;
+            border-right: 2px solid #ffd6c2;
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
         }
-        @media (max-width: 768px) {
+        .sidebar .position-sticky {
+            position: static;
+        }
+        .sidebar a {
+            color: var(--sidebar-link);
+            display: flex;
+            align-items: center;
+            padding: 18px 24px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.25rem;
+            letter-spacing: 0.5px;
+            transition: background 0.2s, color 0.2s;
+            width: 100%;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background-color: var(--sidebar-link-hover);
+            color: var(--theme-contrast);
+        }
+        .sidebar a svg, .sidebar a span.emoji {
+            margin-right: 12px;
+            font-size: 1.4em;
+        }
+        .content {
+            padding: 40px 30px 30px 30px;
+            min-height: 100vh;
+            background: #fff;
+            border-radius: 18px;
+            margin: 24px 0;
+            box-shadow: 0 2px 16px rgba(255, 87, 34, 0.06);
+        }
+        @media (max-width: 991.98px) {
             .sidebar {
                 min-height: auto;
+                padding: 1rem 0.5rem;
+            }
+            .content {
+                padding: 24px 10px 10px 10px;
+                margin: 12px 0;
+            }
+        }
+        @media (max-width: 767.98px) {
+            .sidebar {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-around;
+                border-right: none;
+                border-bottom: 2px solid #ffd6c2;
+                min-height: 60px;
+                padding: 0.5rem 0;
+            }
+            .sidebar a {
+                font-size: 1rem;
+                padding: 10px 8px;
+                margin-bottom: 0;
+                border-radius: 6px;
+            }
+            .content {
+                padding: 12px 2px;
+                margin: 8px 0;
             }
         }
     </style>
@@ -84,19 +136,19 @@
 
     <!-- Layout -->
     <div class="container-fluid">
-        <div class="row">
+        <div class="row flex-nowrap">
             <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <nav class="col-12 col-md-3 col-lg-2 sidebar">
                 <div class="position-sticky">
-                    <a href="{% url 'jobseeker_dashboard' %}">🏠 Dashboard</a>
-                    <a href="#">📄 My Applications</a>
-                    <a href="#">👤 Profile</a>
-                    <a href="#">⚙️ Settings</a>
+                    <a href="{% url 'jobseeker_dashboard' %}"><span class="emoji">🏠</span> Dashboard</a>
+                    <a href="#"><span class="emoji">📄</span> My Applications</a>
+                    <a href="#"><span class="emoji">👤</span> Profile</a>
+                    <a href="#"><span class="emoji">⚙️</span> Settings</a>
                 </div>
             </nav>
 
             <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 content">
+            <main class="col content">
                 {% block content %}
                 <!-- Page-specific content goes here -->
                 {% endblock %}

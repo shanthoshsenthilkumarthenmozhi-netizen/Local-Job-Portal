@@ -4,93 +4,180 @@
 {% block content %}
 <style>
     body {
-        background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+        background: linear-gradient(135deg, #fff7f0 0%, #ffe5d0 100%);
         min-height: 100vh;
+        font-family: 'Segoe UI', 'Arial', sans-serif;
     }
-    .dashboard-header {
-        background: linear-gradient(90deg, #6a11cb 0%, #2575fc 100%);
-        color: #fff;
-        border-radius: 1rem;
-        padding: 2rem 1rem;
-        margin-bottom: 2rem;
-        text-align: center;
-        box-shadow: 0 4px 24px rgba(106,17,203,0.1);
-    }
-    .dashboard-card {
-        border: none;
-        border-radius: 1rem;
-        background: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
-        color: #333;
-        transition: transform 0.2s, box-shadow 0.2s;
-        box-shadow: 0 2px 16px rgba(253,160,133,0.12);
-    }
-    .dashboard-card:nth-child(2) {
-        background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
-    }
-    .dashboard-card:nth-child(3) {
-        background: linear-gradient(120deg, #fbc2eb 0%, #a6c1ee 100%);
-    }
-    .dashboard-card:hover {
-        transform: translateY(-8px) scale(1.03);
-        box-shadow: 0 8px 32px rgba(106,17,203,0.15);
-    }
-    .dashboard-card .btn {
-        border-radius: 2rem;
-        font-weight: 500;
+    /* Navbar */
+    .navbar {
+        background: orangered !important;
+        min-height: 70px;
+        font-size: 1.25rem;
+        font-weight: 600;
         letter-spacing: 0.5px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     }
-    @media (max-width: 991px) {
-        .dashboard-header {
+    .navbar .navbar-brand, .navbar .nav-link, .navbar .navbar-text {
+        color: #fff !important;
+        font-size: 1.2rem;
+    }
+    .navbar .nav-link.active, .navbar .nav-link:focus, .navbar .nav-link:hover {
+        color: #ffe5d0 !important;
+    }
+    /* Sidebar */
+    .sidebar {
+        background: #fff3e6;
+        min-height: 100vh;
+        padding: 2rem 1rem 1rem 1rem;
+        border-radius: 1.5rem;
+        box-shadow: 0 2px 16px rgba(255, 69, 0, 0.07);
+        font-size: 1.1rem;
+        width: 100%;
+        max-width: 250px;
+        margin-right: 2rem;
+    }
+    .sidebar .nav-link {
+        color: orangered;
+        border-radius: 0.75rem;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem 1rem;
+        transition: background 0.2s, color 0.2s;
+        font-weight: 500;
+    }
+    .sidebar .nav-link.active, .sidebar .nav-link:hover {
+        background: orangered;
+        color: #fff;
+    }
+    /* Dashboard Header */
+    .dashboard-header {
+        background: none;
+        color: orangered;
+        border-radius: 0;
+        padding: 0 0 1.5rem 0;
+        margin-bottom: 1.5rem;
+        text-align: left;
+        box-shadow: none;
+    }
+    .dashboard-header h2 {
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        letter-spacing: 0.5px;
+    }
+    .dashboard-header p {
+        font-size: 1.15rem;
+        color: #ff7f3f;
+        margin-bottom: 0;
+    }
+    /* Dashboard Cards */
+    .dashboard-feature {
+        border: none;
+        border-radius: 1.25rem;
+        background: linear-gradient(120deg, #ffb88c 0%, #ff6f3c 100%);
+        color: #fff;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 2px 16px rgba(255, 69, 0, 0.10);
+        min-height: 180px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .dashboard-feature:nth-child(2) {
+        background: linear-gradient(120deg, #ffd6b0 0%, #ff7f3f 100%);
+        color: #fff;
+    }
+    .dashboard-feature:nth-child(3) {
+        background: linear-gradient(120deg, #ffe5d0 0%, #ffb88c 100%);
+        color: #ff6f3c;
+    }
+    .dashboard-feature:hover {
+        transform: translateY(-6px) scale(1.03);
+        box-shadow: 0 8px 32px rgba(255, 69, 0, 0.15);
+    }
+    .dashboard-feature .btn {
+        border-radius: 2rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(255, 69, 0, 0.08);
+        font-size: 1rem;
+        padding: 0.5rem 1.5rem;
+        margin-top: 0.5rem;
+    }
+    /* Responsive */
+    @media (max-width: 1199px) {
+        .sidebar {
+            max-width: 200px;
             padding: 1.5rem 0.5rem;
         }
-        .dashboard-card {
+        .dashboard-header h2 {
+            font-size: 1.7rem;
+        }
+    }
+    @media (max-width: 991px) {
+        .sidebar {
+            max-width: 100%;
+            margin-right: 0;
             margin-bottom: 1.5rem;
+        }
+        .dashboard-header {
+            text-align: center;
+        }
+        .dashboard-header h2 {
+            font-size: 1.4rem;
         }
     }
     @media (max-width: 767px) {
-        .dashboard-header {
-            font-size: 1.2rem;
-            padding: 1rem 0.5rem;
+        .dashboard-feature {
+            padding: 1.25rem 0.75rem;
+            min-height: 140px;
         }
-        .dashboard-card {
-            margin-bottom: 1rem;
+        .dashboard-header h2 {
+            font-size: 1.1rem;
+        }
+        .navbar {
+            font-size: 1rem;
+            min-height: 56px;
         }
     }
 </style>
 
-<div class="dashboard-header">
-    <h2>Welcome, {{ jobseeker_name }}!</h2>
-    <p>Your personalized jobseeker dashboard</p>
-</div>
-
-<div class="row g-4">
-    <div class="col-lg-4 col-md-6 col-12">
-        <div class="card dashboard-card shadow-sm h-100">
-            <div class="card-body d-flex flex-column align-items-center text-center">
-                <h5 class="card-title mb-2">My Profile</h5>
-                <p class="mb-3">Update your details and resume.</p>
-                <a href="#" class="btn btn-primary btn-sm px-4">Edit Profile</a>
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <!-- Sidebar -->
+        
+        <!-- Main Content -->
+        <main class="col px-3">
+            <div class="dashboard-header">
+                <h2>Welcome, {{ jobseeker_name }}!</h2>
+                <p>Your personalized jobseeker dashboard</p>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-6 col-12">
-        <div class="card dashboard-card shadow-sm h-100">
-            <div class="card-body d-flex flex-column align-items-center text-center">
-                <h5 class="card-title mb-2">My Applications</h5>
-                <p class="mb-3">Track status of jobs you applied for.</p>
-                <a href="#" class="btn btn-success btn-sm px-4">View Applications</a>
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="dashboard-feature shadow-sm h-100">
+                        <h5 class="mb-2">My Profile</h5>
+                        <p class="mb-2">Update your details and resume.</p>
+                        <a href="{% url 'profile_jobseeker' %}" class="btn btn-light text-orangered">Edit Profile</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 col-12">
+                    <div class="dashboard-feature shadow-sm h-100">
+                        <h5 class="mb-2">My Applications</h5>
+                        <p class="mb-2">Track status of jobs you applied for.</p>
+                        <a href="{% url 'view_applications' %}" class="btn btn-light text-orangered">View Applications</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12 col-12">
+                    <div class="dashboard-feature shadow-sm h-100">
+                        <h5 class="mb-2">Available Jobs</h5>
+                        <p class="mb-2">Explore latest job opportunities.</p>
+                        <a href="{% url 'browse_jobs' %}" class="btn btn-light text-orangered">Browse Jobs</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-12 col-12">
-        <div class="card dashboard-card shadow-sm h-100">
-            <div class="card-body d-flex flex-column align-items-center text-center">
-                <h5 class="card-title mb-2">Available Jobs</h5>
-                <p class="mb-3">Explore latest job opportunities.</p>
-                <a href="#" class="btn btn-info btn-sm px-4">Browse Jobs</a>
-            </div>
-        </div>
+        </main>
     </div>
 </div>
 {% endblock %}

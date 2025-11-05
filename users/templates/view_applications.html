@@ -1,0 +1,37 @@
+{% extends "base_jobseeker.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-3">My Applications</h2>
+
+    {% if applications %}
+        <table class="table table-bordered table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Job Title</th>
+                    <th>Company</th>
+                    <th>Applied On</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for app in applications %}
+                    <tr>
+                        <td>{{ app.job.title }}</td>
+                        <td>{{ app.job.company }}</td>
+                        <td>{{ app.created_at|date:"M d, Y" }}</td>
+                        <td>
+                            {% if app.status %}
+                                <span class="badge bg-success">{{ app.status }}</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Pending</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="alert alert-info">You have not applied for any jobs yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
